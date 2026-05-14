@@ -1,0 +1,133 @@
+/*  Animation for the Badges (More movement) */
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Animation for the Text/Heading (Subtle movement + slight tilt) */
+@keyframes textFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+
+/* Helper Classes */
+.float-infinite {
+  animation: badgeFloat 4s ease-in-out infinite;
+}
+
+.animate-text-float {
+  animation: textFloat 5s ease-in-out infinite;
+}
+
+.animate-heading-float {
+  animation: badgeFloat 6s ease-in-out infinite;
+}
+
+/* ================= FADE ================= */
+
+.animated-text { 
+  animation: fadeUp 1s ease forwards; 
+}
+
+.delay { 
+  animation-delay: 0.5s; 
+}
+
+/* Keep ONLY ONE fadeUp */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.fade-in-left {
+  animation: fadeLeft 0.8s ease forwards;
+}
+
+.fade-in-right {
+  animation: fadeRight 0.8s ease forwards;
+}
+
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ================= FLOAT IMAGE ================= */
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.hero-img {
+  transition: transform 0.5s ease;
+  animation: float 5s ease-in-out infinite;
+}
+
+.hero-img:hover {
+  transform: scale(1.03);
+}
+
+/* ================= BUTTON ================= */
+
+.custom-btn {
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* ================= GLOW ================= */
+
+.glow {
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(255,193,7,0.2) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* ================= DELAYS ================= */
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* ================= CARDS ================= */
+
+.benefit-card {
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Icon animation */
+.icon {
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover .icon {
+  transform: scale(1.2);
+}
