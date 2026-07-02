@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -177,12 +176,25 @@ function Registration() {
   };
 
   return (
+  <div
+    className="container-fluid d-flex justify-content-center align-items-center"
+    style={{
+      minHeight: "100vh",
+      background: "#f5f7fb",
+      padding: "20px",
+    }}
+  >
+    <div
+      className="card shadow border-0"
+      style={{
+        width: "100%",
+        maxWidth: "550px",
+        borderRadius: "18px",
+      }}
+    >
+      <div className="card-body p-4">
 
-    <div className="container mt-5">
-
-      <div className="card shadow p-4">
-
-        <h2 className="text-center mb-4">
+        <h2 className="text-center mb-4 fw-bold">
           User Registration
         </h2>
 
@@ -190,8 +202,7 @@ function Registration() {
 
           {/* FULL NAME */}
           <div className="mb-3">
-
-            <label className="form-label">
+            <label className="form-label fw-semibold">
               Full Name
             </label>
 
@@ -203,67 +214,55 @@ function Registration() {
               onChange={handleChange}
               required
             />
-
           </div>
 
-          {/* EMAIL */}
-          <div className="mb-3">
+         {/* EMAIL & PHONE */}
+<div className="row">
+  <div className="col-md-6 mb-3">
+    <label className="form-label fw-semibold">
+      Email
+    </label>
 
-            <label className="form-label">
-              Email
-            </label>
+    <input
+      type="email"
+      className="form-control"
+      name="email"
+      value={formData.email}
+      onChange={handleChange}
+      required
+    />
+  </div>
 
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+  <div className="col-md-6 mb-3">
+    <label className="form-label fw-semibold">
+      Phone Number
+    </label>
 
-          </div>
-
-          {/* PHONE */}
-          <div className="mb-3">
-
-            <label className="form-label">
-              Phone Number
-            </label>
-
-            <input
-              type="text"
-              className="form-control"
-              name="phoneno"
-              value={formData.phoneno}
-              onChange={handleChange}
-              required
-            />
-
-          </div>
-
-          {/* SEND OTP BUTTON */}
+    <input
+      type="text"
+      className="form-control"
+      name="phoneno"
+      value={formData.phoneno}
+      onChange={handleChange}
+      required
+    />
+  </div>
+</div>
           {!otpSent && (
-
             <button
               type="button"
-              className="btn btn-primary w-100 mb-3"
+              className="btn  btn-warning w-100 mb-3"
               onClick={sendOtp}
               disabled={loading}
             >
-
               {loading ? "Sending OTP..." : "Send OTP"}
-
             </button>
           )}
 
-          {/* OTP INPUT */}
           {otpSent && !otpVerified && (
-
             <>
               <div className="mb-3">
-
-                <label className="form-label">
+                <label className="form-label fw-semibold">
                   Enter OTP
                 </label>
 
@@ -273,7 +272,6 @@ function Registration() {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                 />
-
               </div>
 
               <button
@@ -282,157 +280,118 @@ function Registration() {
                 onClick={verifyOtp}
                 disabled={loading}
               >
-
                 {loading ? "Verifying..." : "Verify OTP"}
-
               </button>
             </>
           )}
 
-          {/* VERIFIED MESSAGE */}
           {otpVerified && (
-
             <div className="alert alert-success">
-
               OTP Verified Successfully ✔
-
             </div>
           )}
 
-          {/* PASSWORD */}
-          <div className="mb-3">
+          <div className="row">
+  <div className="col-md-6 mb-3">
+    <label className="form-label fw-semibold">Password</label>
+    <input
+      type="password"
+      className="form-control"
+      name="password"
+      value={formData.password}
+      onChange={handleChange}
+      required
+    />
+  </div>
 
-            <label className="form-label">
-              Password
-            </label>
-
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-
-          </div>
-
-          {/* CONFIRM PASSWORD */}
-          <div className="mb-3">
-
-            <label className="form-label">
-              Confirm Password
-            </label>
-
-            <input
-              type="password"
-              className="form-control"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-
-          </div>
+  <div className="col-md-6 mb-3">
+    <label className="form-label fw-semibold">
+      Confirm Password
+    </label>
+    <input
+      type="password"
+      className="form-control"
+      name="confirmPassword"
+      value={formData.confirmPassword}
+      onChange={handleChange}
+      required
+    />
+  </div>
+</div>
 
           {/* GENDER */}
           <div className="mb-3">
-
-            <label className="form-label">
+            <label className="form-label fw-semibold">
               Gender
             </label>
 
             <select
-              className="form-control"
+              className="form-select"
               name="gender"
               value={formData.gender}
               onChange={handleChange}
               required
             >
-
-              <option value="">
-                Select Gender
-              </option>
-
-              <option value="MALE">
-                Male
-              </option>
-
-              <option value="FEMALE">
-                Female
-              </option>
-
-              <option value="OTHER">
-                Other
-              </option>
-
+              <option value="">Select Gender</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
             </select>
-
           </div>
 
-          {/* COUNTRY */}
-          <div className="mb-3">
+          {/* COUNTRY & STATE */}
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label className="form-label fw-semibold">
+                Country
+              </label>
 
-            <label className="form-label">
-              Country
-            </label>
+              <input
+                type="text"
+                className="form-control"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-            <input
-              type="text"
-              className="form-control"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
+            <div className="col-md-6 mb-3">
+              <label className="form-label fw-semibold">
+                State
+              </label>
 
+              <input
+                type="text"
+                className="form-control"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
 
-          {/* STATE */}
-          <div className="mb-3">
-
-            <label className="form-label">
-              State
-            </label>
-
-            <input
-              type="text"
-              className="form-control"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              required
-            />
-
-          </div>
-
-          {/* REGISTER BUTTON */}
           <button
             type="submit"
             className="btn btn-success w-100"
             disabled={!otpVerified || loading}
           >
-
             {loading ? "Registering..." : "Register"}
-
           </button>
 
         </form>
 
-        {/* MESSAGE */}
         {message && (
-
           <div className="alert alert-info mt-3">
-
             {message}
-
           </div>
         )}
 
       </div>
-
     </div>
-  );
+  </div>
+);
 }
 
 export default Registration;

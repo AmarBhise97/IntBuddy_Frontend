@@ -6,7 +6,7 @@ function Contact() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setShow(true), 100);
+    setTimeout(() => setShow(true), 200);
   }, []);
 
   const handleSubmit = (e) => {
@@ -15,70 +15,129 @@ function Contact() {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
+    <section className="contact-section py-5 overflow-hidden">
+      <div className="container py-lg-5">
 
-      {/* Heading */}
-      <h2 className={`fw-bold mb-4 display-6 text-dark fade-heading ${show ? "show" : ""}`}>
-        Get in <span className="text-warning">Touch</span>
-      </h2>
+        {/* Header */}
+        <div
+          className={`text-center mb-5 ${
+            show ? "header-show" : "header-hide"
+          }`}
+        >
+          <span className="section-tag floating-badge">
+            CONTACT US
+          </span>
 
-      {/* Contact Card */}
-      <div className={`row shadow-lg rounded-4 overflow-hidden contact-card fade-card ${show ? "show" : ""}`}>
+          <h2 className="display-2 fw-bold mt-4 mb-3 floating-heading">
+            Get In 
+            <span className="text-warning"> Touch</span>
+          </h2>
 
-        {/* LEFT SIDE */}
-        <div className="col-md-6 d-flex flex-column justify-content-center p-4 text-white contact-left">
-          <h4 className="fw-bold mb-3">IntBuddy Support</h4>
-          <p className="small">
-            Have questions or want to share feedback about IntBuddy? 
-            We’d love to hear from you.
+          <p
+            className="lead text-secondary mx-auto floating-text"
+            style={{ maxWidth: "750px" }}
+          >
+            Have questions, feedback, or suggestions? We'd love to hear
+            from you and help make your interview journey better.
           </p>
+        </div>
 
-          <div className="mt-3 small">
-            <p><i className="bi bi-envelope-fill me-2"></i> support@intbuddy.com</p>
-            <p><i className="bi bi-geo-alt-fill me-2"></i> India</p>
+        {/* Contact Card */}
+        <div
+          className={`contact-wrapper ${
+            show ? "card-show" : ""
+          }`}
+        >
+          <div className="row g-0">
+
+            {/* Left Side */}
+            <div className="col-lg-5 contact-left">
+              <div className="contact-content">
+
+                <div className="contact-icon">
+                  <i className="bi bi-chat-dots-fill"></i>
+                </div>
+
+                <h3 className="fw-bold mb-3">
+                  Get In Touch
+                </h3>
+
+                <p className="opacity-75 mb-4">
+                  Reach out for support, partnerships,
+                  feedback, or any questions about IntBuddy.
+                </p>
+
+                <div className="contact-info">
+                  <div className="info-item">
+                    <i className="bi bi-envelope-fill"></i>
+                    <span>support@intbuddy.com</span>
+                  </div>
+
+                  <div className="info-item">
+                    <i className="bi bi-geo-alt-fill"></i>
+                    <span>India</span>
+                  </div>
+
+                  <div className="info-item">
+                    <i className="bi bi-clock-fill"></i>
+                    <span>24/7 Community Support</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side */}
+            <div className="col-lg-7 bg-white">
+              <div className="form-container">
+
+                <h4 className="fw-bold mb-4 text-center">
+                  Send a Message
+                </h4>
+
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      className="form-control custom-input"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <input
+                      type="email"
+                      className="form-control custom-input"
+                      placeholder="Your Email"
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <textarea
+                      rows="5"
+                      className="form-control custom-input"
+                      placeholder="Your Message"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn submit-btn w-100"
+                  >
+                    Send Message
+                    <i className="bi bi-arrow-right ms-2"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
-        <div className="col-md-6 bg-white p-4">
-          <h5 className="mb-3 fw-bold text-center">Contact Us</h5>
-
-          <form onSubmit={handleSubmit}>
-            <div className="mb-2">
-              <input
-                type="text"
-                className="form-control custom-input"
-                placeholder="Your Name"
-                required
-              />
-            </div>
-
-            <div className="mb-2">
-              <input
-                type="email"
-                className="form-control custom-input"
-                placeholder="Your Email"
-                required
-              />
-            </div>
-
-            <div className="mb-2">
-              <textarea
-                rows="3"
-                className="form-control custom-input"
-                placeholder="Your Message"
-                required
-              ></textarea>
-            </div>
-
-            <button type="submit" className="btn btn-dark w-100 custom-btn mt-2">
-              Send Message
-            </button>
-          </form>
-        </div>
-
       </div>
-    </div>
+    </section>
   );
 }
 

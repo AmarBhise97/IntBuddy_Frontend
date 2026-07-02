@@ -10,118 +10,188 @@ function About() {
   }, []);
 
   return (
-    <section className="py-5 bg-light overflow-hidden">
-      <div className="container py-lg-5">
-        
-        {/* SECTION HEADER */}
-        <div className={`text-center mb-5 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-middle-y' : 'opacity-0'}`}>
-          <h2 className="display-4 fw-bold">
-            Our <span className="text-warning border-bottom border-4 border-warning">Journey</span>
-          </h2>
-          <p className="lead text-muted mx-auto mt-3" style={{ maxWidth: "600px" }}>
-            Bridging the gap between ambitious talent and their dream tech careers through real-world insights.
-          </p>
-        </div>
-
-        {/* ADVANCED CARD GRID */}
-        <div className="row g-4">
+    <>
+      <section className="about-section py-5 overflow-hidden">
+        <div className="container py-lg-5">
           
-          {/* CARD 1: THE CONNECTOR */}
-          <div className="col-lg-4 col-md-6">
-            <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative group-hover">
-              {/* Image Overlay Header */}
-              <div className="position-relative overflow-hidden" style={{ height: "200px" }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" 
-                  className="card-img-top h-100 w-100 object-fit-cover transition-transform duration-500 hover-zoom" 
-                  alt="Teamwork" 
-                />
-                <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
-                <span className="position-absolute bottom-0 end-0 m-3 badge rounded-pill bg-warning text-dark fw-bold px-3 py-2 shadow">
-                  Networking
-                </span>
-              </div>
-              
-              <div className="card-body p-4">
-                <div className="d-flex align-items-center mb-3">
-                  <div className="bg-warning-subtle p-2 rounded-3 me-3 text-warning">
-                    <i className="bi bi-share-fill fs-4"></i>
+          {/* HEADER */}
+          <div
+            className={`text-center mb-5 ${
+              isVisible ? "header-show" : "header-hide"
+            }`}
+          >
+            <span className="section-tag floating-badge">
+              ABOUT INTBUDDY
+            </span>
+
+            <h2 className="display-2 fw-bold mt-4 mb-3 floating-heading">
+              Turning Interview Experiences Into
+              <span className="text-warning"> Career Success</span>
+            </h2>
+
+            <p
+              className="lead text-secondary mx-auto floating-text"
+              style={{ maxWidth: "750px" }}
+            >
+              Discover real interview experiences, company insights, and
+              preparation strategies shared by candidates to help you
+              confidently achieve your career goals.
+            </p>
+          </div>
+
+          {/* CARDS */}
+          <div className="row g-4">
+            {/* CARD 1 */}
+            <div className="col-lg-4 col-md-6">
+              <div className="about-card">
+                <div className="image-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
+                    alt="About IntBuddy"
+                    className="about-img"
+                  />
+
+                  <div className="card-badge">
+                    <i className="bi bi-building me-2"></i>
+                    About Us
                   </div>
-                  <h5 className="card-title fw-bold m-0">What we do?</h5>
                 </div>
-                <p className="card-text text-secondary mb-4">
-                  Contribute your interview journey to help thousands of peers navigate the technical landscape.
-                </p>
-                <button className="btn btn-outline-warning rounded-pill w-100 fw-bold border-2">Learn More</button>
-              </div>
-            </div>
-          </div>
 
-          {/* CARD 2: THE PREPARER (Featured Card) */}
-          <div className="col-lg-4 col-md-6">
-            <div className="card h-100 border-0 shadow-lg rounded-4 bg-dark text-white overflow-hidden scale-hover">
-              <div className="position-relative" style={{ height: "200px" }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" 
-                  className="card-img-top h-100 w-100 object-fit-cover opacity-75" 
-                  alt="Analysis" 
-                />
-                <div className="position-absolute top-50 start-50 translate-middle text-center w-100">
-                   <i className="bi bi-lightning-charge-fill display-4 text-warning shadow-sm"></i>
-                </div>
-              </div>
-
-              <div className="card-body p-4">
-                <h5 className="card-title fw-bold mb-3 text-warning">Company Overview</h5>
-                <p className="card-text opacity-75 mb-4">
-                  Access curated questions and direct feedback from mentors currently working at MAANG companies.
-                </p>
-                <button className="btn btn-warning rounded-pill w-100 fw-bold py-2 shadow">Unlock Access</button>
-              </div>
-            </div>
-          </div>
-
-          {/* CARD 3: THE COMMUNITY */}
-          <div className="col-lg-4 col-md-12">
-            <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden group-hover">
-               <div className="position-relative overflow-hidden" style={{ height: "200px" }}>
-                <img 
-                  src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=600&q=80" 
-                  className="card-img-top h-100 w-100 object-fit-cover transition-transform duration-500 hover-zoom" 
-                  alt="Community" 
-                />
-                <div className="position-absolute top-0 start-0 w-100 h-100 bg-warning opacity-10"></div>
-              </div>
-
-              <div className="card-body p-4">
-                <div className="d-flex align-items-center mb-3">
-                  <div className="bg-warning-subtle p-2 rounded-3 me-3 text-warning">
-                    <i className="bi bi-people-fill fs-4"></i>
+                <div className="card-content">
+                  <div className="about-icon">
+                    <i className="bi bi-building"></i>
                   </div>
-                  <h5 className="card-title fw-bold m-0">Global Community</h5>
+
+                  <h4 className="fw-bold mt-3 mb-3">
+                    Who We Are
+                  </h4>
+
+                  <p className="text-muted">
+                    IntBuddy is a community-driven platform that helps students
+                    and professionals prepare for interviews through authentic
+                    experiences, company insights, and practical guidance from
+                    successful candidates.
+                  </p>
+
+                  <button className="btn btn-warning rounded-pill px-4 mt-2">
+                    Learn More
+                  </button>
                 </div>
-                <p className="card-text text-secondary mb-4">
-                  Join a thriving ecosystem where knowledge is free and support is unlimited.
-                </p>
-                <div className="d-flex align-items-center mt-auto pt-3 border-top">
-                  <small className="text-muted fw-semibold">Trusted by 5k+ Users</small>
+              </div>
+            </div>
+
+            {/* CARD 2 */}
+            <div className="col-lg-4 col-md-6">
+              <div className="about-card featured-card">
+                <div className="image-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+                    alt="Mission"
+                    className="about-img"
+                  />
+
+                  <div className="card-badge">
+                    <i className="bi bi-bullseye me-2"></i>
+                    Mission
+                  </div>
+                </div>
+
+                <div className="card-content">
+                  <div className="about-icon">
+                    <i className="bi bi-bullseye"></i>
+                  </div>
+
+                  <h4 className="fw-bold text-warning mt-3 mb-3">
+                    Our Mission
+                  </h4>
+
+                  <p className="text-light opacity-75">
+                    We believe every candidate deserves access to authentic
+                    interview knowledge. Our mission is to make preparation
+                    transparent, accessible, and effective for everyone.
+                  </p>
+
+                  <button className="btn btn-warning rounded-pill px-4 mt-2">
+                    Explore More
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD 3 */}
+            <div className="col-lg-4 col-md-12">
+              <div className="about-card">
+                <div className="image-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+                    alt="Success"
+                    className="about-img"
+                  />
+
+                  <div className="card-badge">
+                    <i className="bi bi-stars me-2"></i>
+                    Why Us
+                  </div>
+                </div>
+
+                <div className="card-content">
+                  <div className="about-icon">
+                    <i className="bi bi-stars"></i>
+                  </div>
+
+                  <h4 className="fw-bold mt-3 mb-3">
+                    Why Choose IntBuddy?
+                  </h4>
+
+                  <p className="text-muted">
+                    Explore company-specific interview patterns, preparation
+                    strategies, and candidate experiences that help you approach
+                    interviews with confidence and clarity.
+                  </p>
+
+                  <button className="btn btn-outline-warning rounded-pill px-4 mt-2">
+                    Get Started
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* STATS */}
+          <div className="row mt-5 g-4">
+            <div className="col-md-3 col-6">
+              <div className="stat-card">
+                <h2>5K+</h2>
+                <p>Students Helped</p>
+              </div>
+            </div>
+
+            <div className="col-md-3 col-6">
+              <div className="stat-card">
+                <h2>500+</h2>
+                <p>Interview Stories</p>
+              </div>
+            </div>
+
+            <div className="col-md-3 col-6">
+              <div className="stat-card">
+                <h2>100+</h2>
+                <p>Companies Covered</p>
+              </div>
+            </div>
+
+            <div className="col-md-3 col-6">
+              <div className="stat-card">
+                <h2>95%</h2>
+                <p>User Satisfaction</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* INLINE CUSTOM CSS FOR HOVER EFFECTS */}
-      <style>{`
-        .transition-all { transition: all 0.5s ease; }
-        .scale-hover:hover { transform: scale(1.03); transition: 0.3s; }
-        .object-fit-cover { object-fit: cover; }
-        .hover-zoom:hover { transform: scale(1.1); }
-        .group-hover:hover { border: 1px solid rgba(255, 193, 7, 0.5) !important; }
-      `}</style>
-    </section>
+
+    </>
   );
 }
 
