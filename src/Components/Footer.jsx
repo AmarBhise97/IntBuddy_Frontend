@@ -25,8 +25,8 @@ function Footer() {
           <div className="col-md-3 mb-4">
             <h5>Contact</h5>
             <p><i className="bi bi-geo-alt-fill"></i> Unique System SKills,Kothrud Pune, India</p>
-            <p><i className="bi bi-telephone-fill"></i> +91 9876543210</p>
-            <p><i className="bi bi-envelope-fill"></i> malusarenamrata88@gmail.com</p>
+            <p><i className="bi bi-telephone-fill"></i> +91 9730695484</p>
+            <p><i className="bi bi-envelope-fill"></i> bhiseamar2003@gmail.com</p>
           </div>
 
           <div className="col-md-3 mb-4">
@@ -45,7 +45,7 @@ function Footer() {
 
         <div className="row">
           <div className="col-12 text-center">
-            <small>© 2026 MyWebsite. All rights reserved.</small>
+            <small>© 2026 IntBuddy.com. All rights reserved.</small>
           </div>
         </div>
 
