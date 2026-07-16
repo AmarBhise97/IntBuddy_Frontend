@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../axiosConfig";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -19,6 +20,8 @@ function AddExperience() {
     details: "",
     result: "",
   });
+
+  
 
   // HANDLE INPUT
   const handleChange = (e) => {
@@ -64,10 +67,10 @@ function AddExperience() {
         }
       };
 
-      const response = await axios.post(
-        "http://localhost:9090/Experiance/add",
-        experienceData
-      );
+      const response = await api.post(
+  "/Experiance/add",
+  experienceData
+);
 
       console.log(response.data);
 
@@ -85,14 +88,22 @@ function AddExperience() {
 
     } catch (error) {
 
-      console.log(error);
+  console.error(error);
 
-      setMessage("Failed To Add Experience ❌");
+  if (error.response) {
 
-    } finally {
+    setMessage(error.response.data.message || "Server Error");
 
-      setLoading(false);
-    }
+  } else if (error.request) {
+
+    setMessage("Cannot connect to Spring Boot Server");
+
+  } else {
+
+    setMessage("Something went wrong");
+
+  }
+}
   };
 
   return (
@@ -296,31 +307,64 @@ function AddExperience() {
 function CustomerDashboard() {
 
   const [activeTab, setActiveTab] = useState("overview");
+  const [experiences, setExperiences] = useState([]);
 
-  const [user, setUser] = useState({
+ const [user, setUser] = useState({
+    id: "",
     fullName: "Guest User",
     email: "",
-  });
+    phoneno: ""
+});
 
   const navigate = useNavigate();
 
   // GET USER DATA
-  useEffect(() => {
+ useEffect(() => {
 
     const data = localStorage.getItem("userData");
 
     if (data) {
 
-      const parsed = JSON.parse(data);
+        const parsed = JSON.parse(data);
 
-      setUser({
-        fullName: parsed.fullName || parsed.name,
-        email: parsed.email,
-      });
+        console.log(parsed);
+
+        setUser({
+            id: parsed.id,
+            fullName: parsed.fullName,
+            email: parsed.email,
+            phoneno: parsed.phoneno
+        });
+
+        if (parsed.id) {
+
+            loadExperiences(parsed.id);
+
+        }
+
     }
 
-  }, []);
+}, []);
 
+
+
+
+
+const loadExperiences = async (id) => {
+    try {
+
+        const response = await api.get(`/users/${id}`);
+
+        console.log("Response:", response.data);
+        console.log("Experience:", response.data.experiance);
+        console.log("Length:", response.data.experiance.length);
+
+        setExperiences(response.data.experiance || []);
+
+    } catch (error) {
+        console.log(error);
+    }
+};
   // LOGOUT
   const handleLogout = () => {
 
@@ -480,11 +524,13 @@ function CustomerDashboard() {
 
                     </h2>
 
+
                     {/* EMAIL */}
                     <div
                       className="d-flex align-items-center p-4 rounded-4 shadow-sm mb-4"
                       style={{
                         backgroundColor: "#fff8e1"
+
                       }}
                     >
 
@@ -535,8 +581,10 @@ function CustomerDashboard() {
                       >
 
                         <i className="bi bi-person-fill text-dark fs-4"></i>
+                        
 
                       </div>
+                      
 
                       <div className="ms-4">
 
@@ -553,6 +601,54 @@ function CustomerDashboard() {
                       </div>
 
                     </div>
+                    <hr className="my-5" />
+
+<h3 className="fw-bold mb-4">
+    My Interview Experiences
+</h3>
+
+{
+    experiences.length === 0 ? (
+
+        <div className="alert alert-warning">
+            No Experience Added
+        </div>
+
+    ) : (
+
+        experiences.map((exp, index) => (
+
+            <div
+                key={index}
+                className="card shadow-sm mb-3 p-4"
+            >
+                <h4>{exp.companyName}</h4>
+
+                <p>
+                    <b>Position :</b> {exp.position}
+                </p>
+
+                <p>
+                    <b>Role :</b> {exp.role}
+                </p>
+
+                <p>
+                    <b>Experience :</b> {exp.experianceinyear}
+                </p>
+
+                <p>
+                    <b>Result :</b>{" "}
+                    {exp.result ? "Selected" : "Rejected"}
+                </p>
+
+                <p>{exp.details}</p>
+
+            </div>
+
+        ))
+
+    )
+}
 
                   </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import api from "../axiosConfig";
 
 function Login() {
   const [show, setShow] = useState(false);
@@ -22,28 +23,41 @@ function Login() {
   };
 
   
-  const handleLogin = (e) => {
-    e.preventDefault();
+ const handleLogin = async (e) => {
 
-   
-    if (formData.email === "" || formData.password === "") {
+  e.preventDefault();
+
+  if(formData.email==="" || formData.password===""){
       alert("Please fill all fields");
       return;
-    }
+  }
 
-  
-    const user = {
-      name: formData.email.split("@")[0], 
-      email: formData.email,
-      phonenumber: "9876543210"
-    };
+  try{
 
-    localStorage.setItem("userData", JSON.stringify(user));
+      const response = await api.post("/users/login",{
 
-    
-    navigate("/CustomerDashboard");
-  };
+          email:formData.email,
+          password:formData.password
 
+      });
+
+      console.log(response.data);
+
+      localStorage.setItem(
+          "userData",
+          JSON.stringify(response.data)
+      );
+
+      navigate("/CustomerDashboard");
+
+  }
+  catch(error){
+
+      alert("Invalid Email or Password");
+
+  }
+
+};
   return (
     <div
       className="d-flex justify-content-center align-items-center"

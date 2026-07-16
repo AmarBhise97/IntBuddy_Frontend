@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../axiosConfig";
 
 function Registration() {
 
@@ -37,83 +38,76 @@ function Registration() {
   };
 
   // SEND OTP
-  const sendOtp = async () => {
+  // SEND OTP
+const sendOtp = async () => {
 
-    if (!formData.phoneno) {
+  if (!formData.phoneno) {
+    setMessage("Please enter phone number");
+    return;
+  }
 
-      setMessage("Please enter phone number");
+  try {
 
-      return;
-    }
+    setLoading(true);
 
-    try {
+    const response = await api.post(
+      `/users/enterphone/${formData.phoneno}`
+    );
 
-      setLoading(true);
+    console.log(response.data);
 
-      const response = await axios.post(
-        `http://localhost:9090/users/enterphone/${formData.phoneno}`
-      );
+    setOtpSent(true);
 
-      console.log(response.data);
+    setMessage("OTP sent successfully");
 
-      setOtpSent(true);
+  } catch (error) {
 
-      setMessage("OTP sent successfully");
+    console.log(error);
 
-    } catch (error) {
+    setMessage("Failed to send OTP");
 
-      console.log(error);
+  } finally {
 
-      setMessage("Failed to send OTP");
+    setLoading(false);
 
-    } finally {
-
-      setLoading(false);
-    }
-  };
+  }
+};
 
   // VERIFY OTP
   const verifyOtp = async () => {
 
-    if (!otp) {
+  if (!otp) {
+    setMessage("Please enter OTP");
+    return;
+  }
 
-      setMessage("Please enter OTP");
+  try {
 
-      return;
+    setLoading(true);
+
+    const response = await api.post(
+      `/users/verifyotp/${otp}`
+    );
+
+    if (response.data === true) {
+      setOtpVerified(true);
+      setMessage("OTP verified successfully");
+    } else {
+      setMessage("Invalid OTP");
     }
 
-    try {
+  } catch (error) {
 
-      setLoading(true);
+    console.log(error);
 
-      const response = await axios.post(
-        `http://localhost:9090/users/verifyotp/${otp}`
-      );
+    setMessage("OTP verification failed");
 
-      console.log(response.data);
+  } finally {
 
-      if (response.data === true) {
+    setLoading(false);
 
-        setOtpVerified(true);
-
-        setMessage("OTP verified successfully");
-
-      } else {
-
-        setMessage("Invalid OTP");
-      }
-
-    } catch (error) {
-
-      console.log(error);
-
-      setMessage("OTP verification failed");
-
-    } finally {
-
-      setLoading(false);
-    }
-  };
+  }
+};
 
   // REGISTER USER
   const registerUser = async (e) => {
@@ -151,23 +145,36 @@ function Registration() {
         state: formData.state,
       };
 
-      const response = await axios.post(
-        "http://localhost:9090/users/register",
-        userData
-      );
+     const response = await api.post(
+  "/users/register",
+  userData
+);
 
-      console.log(response.data);
+console.log(response.data);
 
-      setMessage("Registration successful");
+// User Data LocalStorage मध्ये Save करा
+localStorage.setItem(
+  "registeredUser",
+  JSON.stringify({
+    fullName: formData.fullName,
+    email: formData.email,
+    phoneno: formData.phoneno,
+  })
+);
 
-      // REDIRECT TO LOGIN PAGE
-      navigate("/login");
+setMessage("Registration successful");
+
+navigate("/login");
 
     } catch (error) {
 
       console.log(error);
 
-      setMessage("Registration failed");
+      setMessage(
+  error.response?.data?.message ||
+  error.response?.data ||
+  "Registration failed"
+);
 
     } finally {
 
