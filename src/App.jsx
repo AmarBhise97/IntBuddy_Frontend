@@ -10,6 +10,7 @@ import Footer from "./Components/Footer";
 import Benefits from "./Components/Benefit";
 import ExperianceForm from "./Components/ExperianceFrom";
 import Contact from "./Components/Contact";
+import SearchPage from "./Components/SearchPage";
 
 
 import ExperianceForm2 from "./Components/ExperianceFrom2";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/ExperianceForm" element={<ExperianceForm />} />
         <Route path="/CustomerDashboard" element={<CustomerDashboard />} />
         <Route path="/ExperianceForm2" element={<ExperianceForm2 />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
 
       {!hideFooter && <Footer />}

@@ -1,7 +1,29 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+//import axios from "axios";
+// किंवा
+ // import api from "../axiosConfig";
+
+
 import intbuddylogo from "../assets/intbuddylogo.png";
 
 function Navbar() {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+ 
+
+const handleSearch = (e) => {
+
+    e.preventDefault();
+
+    if(search.trim()==="") return;
+
+    navigate(`/search?keyword=${search}`);
+
+};
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top border-bottom">
       <div className="container-fluid">
@@ -53,19 +75,23 @@ function Navbar() {
           </ul>
 
           {/* Search Bar */}
-          <form
-            className="d-flex flex-grow-1 mx-lg-3 my-2 my-lg-0"
-            role="search"
-          >
+             <form
+               className="d-flex flex-grow-1 mx-lg-3 my-2 my-lg-0"
+               role="search"
+               onSubmit={handleSearch}
+              >
             <input
               className="form-control rounded-pill me-2"
               type="search"
-              placeholder="Search..."
-            />
+              placeholder="Search Company, Role, Position..."
+               value={search}
+               onChange={(e) => setSearch(e.target.value)}
+               />
             <button className="btn btn-warning rounded-pill px-4" type="submit">
               Search
             </button>
           </form>
+        
 
           {/* Buttons */}
           <div className="d-flex flex-column flex-lg-row gap-2 me-3 mt-2 mt-lg-0">

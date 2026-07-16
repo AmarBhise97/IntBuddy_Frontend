@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
 import api from "../axiosConfig";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,7 +21,7 @@ function AddExperience() {
     result: "",
   });
 
-  
+  const [detailsList, setDetailsList] = useState([""]);
 
   // HANDLE INPUT
   const handleChange = (e) => {
@@ -34,6 +34,21 @@ function AddExperience() {
     });
   };
 
+  const handleDetailsChange = (index, value) => {
+
+  const updated = [...detailsList];
+
+  updated[index] = value;
+
+  if (
+    index === detailsList.length - 1 &&
+    value.trim() !== ""
+  ) {
+    updated.push("");
+  }
+
+  setDetailsList(updated);
+};
   // SUBMIT EXPERIENCE
   const submitExperience = async (e) => {
 
@@ -58,7 +73,10 @@ function AddExperience() {
 
         experianceinyear: formData.experianceinyear,
 
-        details: formData.details,
+        details: detailsList
+  .filter(detail => detail.trim() !== "")
+  .map((detail, index) => `${index + 1}. ${detail}`)
+  .join("\n"),
 
         result: formData.result === "true",
 
@@ -85,6 +103,8 @@ function AddExperience() {
         details: "",
         result: "",
       });
+     
+      setDetailsList([""]);
 
     } catch (error) {
 
@@ -267,23 +287,32 @@ function AddExperience() {
         </div>
 
         {/* DETAILS */}
-        <div className="mb-4">
+       <div className="mb-4">
 
-          <label className="fw-semibold mb-2">
-            Experience Details
-          </label>
+  <label className="fw-bold mb-3">
+    Experience Details
+  </label>
 
-          <textarea
-            rows="6"
-            className="form-control rounded-4 p-3"
-            placeholder="Write interview experience..."
-            name="details"
-            value={formData.details}
-            onChange={handleChange}
-            required
-          ></textarea>
+  {
+  detailsList.map((detail, index) => (
 
-        </div>
+    <div key={index} className="mb-3">
+
+      <textarea
+        rows="4"
+        className="form-control rounded-4 p-3"
+        placeholder={`Experience Detail ${index + 1}`}
+        value={detail}
+        onChange={(e) =>
+          handleDetailsChange(index, e.target.value)
+        }
+      />
+
+    </div>
+
+  ))}
+
+</div>
 
         {/* BUTTON */}
         <button
@@ -410,13 +439,22 @@ const loadExperiences = async (id) => {
         {/* USER */}
         <div className="ms-auto d-flex align-items-center">
 
-          <img
-            src={`https://ui-avatars.com/api/?name=${user.fullName}&background=000000&color=ffffff&size=128`}
-            alt="profile"
-            className="rounded-circle shadow-sm"
-            width="45"
-            height="45"
-          />
+              <div
+  className="rounded-circle shadow d-flex justify-content-center align-items-center mx-auto"
+  style={{
+    width: "160px",
+    height: "160px",
+    backgroundColor: "#ffc107",
+  }}
+>
+  <i
+    className="bi bi-person-circle"
+    style={{
+      fontSize: "150px",
+      color: "#6f5f69",
+    }}
+  ></i>
+</div>
 
           <div className="ms-3">
 
@@ -489,17 +527,33 @@ const loadExperiences = async (id) => {
 
               <div className="card border-0 shadow-lg rounded-5 p-5 bg-white">
 
-                <div className="row align-items-center">
+                <div className="row">
 
                   {/* LEFT */}
-                  <div className="col-md-4 text-center border-end">
+                  <div
+                   className="col-md-4 text-center border-end position-sticky"
+                   style={{
+                   top: "20px",
+                   height: "fit-content"
+                   }}
+>
 
-                    <img
-                      src={`https://ui-avatars.com/api/?name=${user.fullName}&background=ffc107&color=000000&size=200`}
-                      alt="profile"
-                      className="rounded-circle shadow"
-                      width="160"
-                    />
+                   <div
+  className="rounded-circle shadow d-flex justify-content-center align-items-center mx-auto"
+  style={{
+    width: "160px",
+    height: "160px",
+    backgroundColor: "#ffc107",
+  }}
+>
+  <i
+    className="bi bi-person-circle"
+    style={{
+      fontSize: "170px",
+      color: "#675b61",
+    }}
+  ></i>
+</div>
 
                     <h2 className="fw-bold mt-4 text-dark">
 
@@ -516,7 +570,13 @@ const loadExperiences = async (id) => {
                   </div>
 
                   {/* RIGHT */}
-                  <div className="col-md-8 px-5">
+                  <div
+                      className="col-md-8 px-5"
+                      style={{
+                      maxHeight: "80vh",
+                       overflowY: "auto"
+                        }}
+>
 
                     <h2 className="fw-bold text-dark mb-4">
 
@@ -641,7 +701,19 @@ const loadExperiences = async (id) => {
                     {exp.result ? "Selected" : "Rejected"}
                 </p>
 
-                <p>{exp.details}</p>
+                      <div className="mt-3">
+                         <b>Interview Questions :</b>
+
+                           <div
+                             className="mt-2"
+                                style={{
+                                whiteSpace: "pre-line",
+                               lineHeight: "2"
+                                 }}
+                              >
+                                {exp.details}
+                            </div>
+                       </div>
 
             </div>
 
