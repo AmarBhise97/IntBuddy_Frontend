@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useNavigate } from "react-router-dom";
 
 function Benefits() {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -11,22 +13,25 @@ function Benefits() {
 
   const benefits = [
     {
-      icon: "bi-linkedin",
-      title: "LinkedIn Exposure",
-      description:
-        "Boost your professional visibility and strengthen your personal brand by sharing your interview journey.",
-    },
-    {
-      icon: "bi-trophy-fill",
-      title: "Win Rewards",
-      description:
-        "Get a chance to earn exciting rewards and recognition for contributing valuable interview experiences.",
-    },
+  icon: "bi-linkedin",
+  title: "LinkedIn Exposure",
+  description:
+    "Boost your professional visibility and strengthen your personal brand by sharing your interview journey.",
+  path: "/community",
+},   
+   {
+  icon: "bi-trophy-fill",
+  title: "Win Rewards",
+  description:
+    "Get a chance to earn exciting rewards and recognition for contributing valuable interview experiences.",
+  path: "/rewards",
+},
     {
       icon: "bi-journal-check",
       title: "Get Published",
       description:
         "Have your interview story featured on IntBuddy and inspire thousands of aspiring candidates.",
+      path: "/community",
     },
     {
       icon: "bi-people-fill",
@@ -74,7 +79,17 @@ function Benefits() {
               }`}
               key={index}
             >
-              <div className="benefit-card text-center">
+              <div
+  className="benefit-card text-center"
+  onClick={() => {
+    if (item.path) {
+      navigate(item.path);
+    }
+  }}
+  style={{
+    cursor: item.path ? "pointer" : "default",
+  }}
+>
                 <div className="card-glow"></div>
 
                 <div className="icon-box">
