@@ -11,10 +11,10 @@ import Benefits from "./Components/Benefit";
 import ExperianceForm from "./Components/ExperianceFrom";
 import Contact from "./Components/Contact";
 import SearchPage from "./Components/SearchPage";
-import CommunityPage from "./pages/CommunityPage";
-import RewardsPage from "./pages/RewardsPage";
-import PublishPage from "./pages/PublishPage";
-import MentorshipPage from "./pages/MentorshipPage";
+import CommunityPage from "./Pages/CommunityPage";
+import RewardsPage from "./Pages/RewardsPage";
+import PublishPage from "./Pages/PublishPage";
+import MentorshipPage from "./Pages/MentorshipPage";
 
 import ExperianceForm2 from "./Components/ExperianceFrom2";
 import CustomerDashboard from "./Components/Dashboard";
