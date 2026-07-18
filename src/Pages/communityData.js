@@ -1,11 +1,11 @@
 import amar from "../assets/Community/Amar.jpg";
-import chaitanya from "../assets/Community/chaitany.jpg";
-import mahesh from "../assets/Community/mahesh.jpg";
-import shivam from "../assets/Community/shivam.jpg";
-import atherve from "../assets/Community/atherve.jpg";
-import namrata from "../assets/Community/namrata.jpg";
-import nana from "../assets/Community/nana.jpg";
-import viraj from "../assets/Community/viraj.jpg";
+import chaitanya from "../assets/Community/Chaitany.jpg";
+import mahesh from "../assets/Community/Mahesh.jpg";
+import shivam from "../assets/Community/Shivam.jpg";
+import atherve from "../assets/Community/Atherve.jpg";
+import namrata from "../assets/Community/Namrata.jpg";
+import nana from "../assets/Community/Nana.jpg";
+import viraj from "../assets/Community/Viraj.jpg";
 const communityData = [
   {
     id: 1,
