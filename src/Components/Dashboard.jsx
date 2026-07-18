@@ -108,7 +108,7 @@ function AddExperience() {
 
     } catch (error) {
 
-  console.error(error);
+  
 
   if (error.response) {
 
@@ -439,7 +439,7 @@ const loadExperiences = async (id) => {
         {/* USER */}
         <div className="ms-auto d-flex align-items-center">
 
-              <div
+              {/* <div
   className="rounded-circle shadow d-flex justify-content-center align-items-center mx-auto"
   style={{
     width: "160px",
@@ -451,10 +451,10 @@ const loadExperiences = async (id) => {
     className="bi bi-person-circle"
     style={{
       fontSize: "150px",
-      color: "#6f5f69",
+      color: "rgb(88, 14, 58)",
     }}
   ></i>
-</div>
+</div> */}
 
           <div className="ms-3">
 
@@ -589,7 +589,7 @@ const loadExperiences = async (id) => {
                     <div
                       className="d-flex align-items-center p-4 rounded-4 shadow-sm mb-4"
                       style={{
-                        backgroundColor: "#fff8e1"
+                        backgroundColor: "#e7e4ec"
 
                       }}
                     >
@@ -627,7 +627,7 @@ const loadExperiences = async (id) => {
                     <div
                       className="d-flex align-items-center p-4 rounded-4 shadow-sm"
                       style={{
-                        backgroundColor: "#fff8e1"
+                        backgroundColor: "#e7e4ec"
                       }}
                     >
 

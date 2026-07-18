@@ -41,24 +41,24 @@ function Registration() {
   // SEND OTP
 const sendOtp = async () => {
 
-  if (!formData.phoneno) {
-    setMessage("Please enter phone number");
+  if (!formData.email) {
+    setMessage("Please enter email");
     return;
-  }
+}
 
   try {
 
     setLoading(true);
 
-    const response = await api.post(
-      `/users/enterphone/${formData.phoneno}`
-    );
+   const response = await api.post(
+    `/users/sendotp/${formData.email}`
+);
 
     console.log(response.data);
 
     setOtpSent(true);
 
-    setMessage("OTP sent successfully");
+    setMessage("OTP sent to your email.");
 
   } catch (error) {
 
@@ -262,7 +262,7 @@ navigate("/login");
               onClick={sendOtp}
               disabled={loading}
             >
-              {loading ? "Sending OTP..." : "Send OTP"}
+              {loading ? "Sending OTP..." : "Send Email OTP"}
             </button>
           )}
 

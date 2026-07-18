@@ -1,18 +1,55 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import api from "../axiosConfig";
 
 function Contact() {
   const [show, setShow] = useState(false);
+  const [contact, setContact] = useState({
+    name: "",
+    email: "",
+    message: "",
+});
 
   useEffect(() => {
     setTimeout(() => setShow(true), 200);
   }, []);
 
-  const handleSubmit = (e) => {
+ const handleChange = (e) => {
+
+    setContact({
+
+        ...contact,
+
+        [e.target.name]: e.target.value
+
+    });
+
+};
+
+const handleSubmit = async (e) => {
+
     e.preventDefault();
-    alert("Message sent successfully!");
-  };
+
+    try {
+
+        const response = await api.post("/contact/send", contact);
+
+        alert(response.data);
+
+        setContact({
+            name: "",
+            email: "",
+            message: "",
+        });
+
+    } catch (error) {
+
+        alert("Failed to send message");
+
+    }
+
+};
 
   return (
     <section className="contact-section py-5 overflow-hidden">
@@ -96,30 +133,40 @@ function Contact() {
 
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
-                    <input
-                      type="text"
-                      className="form-control custom-input"
-                      placeholder="Your Name"
-                      required
-                    />
+                   <input
+type="text"
+name="name"
+value={contact.name}
+onChange={handleChange}
+className="form-control custom-input"
+placeholder="Your Name"
+/>
                   </div>
 
                   <div className="mb-3">
-                    <input
-                      type="email"
-                      className="form-control custom-input"
-                      placeholder="Your Email"
-                      required
-                    />
+                     <input
+type="email"
+name="email"
+value={contact.email}
+onChange={handleChange}
+className="form-control custom-input"
+placeholder="Your Email"
+/>
                   </div>
 
                   <div className="mb-3">
-                    <textarea
-                      rows="5"
-                      className="form-control custom-input"
-                      placeholder="Your Message"
-                      required
-                    ></textarea>
+                   <textarea
+                    rows="5"
+                     name="message"
+                    value={contact.message}
+onChange={handleChange}
+className="form-control custom-input"
+placeholder="Your Message"
+/>
+                  </div>
+
+                  <div className="mb-3">
+                   
                   </div>
 
                   <button

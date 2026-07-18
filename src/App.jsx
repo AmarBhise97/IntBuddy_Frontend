@@ -13,6 +13,8 @@ import Contact from "./Components/Contact";
 import SearchPage from "./Components/SearchPage";
 import CommunityPage from "./pages/CommunityPage";
 import RewardsPage from "./pages/RewardsPage";
+import PublishPage from "./pages/PublishPage";
+import MentorshipPage from "./pages/MentorshipPage";
 
 import ExperianceForm2 from "./Components/ExperianceFrom2";
 import CustomerDashboard from "./Components/Dashboard";
@@ -46,6 +48,8 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/rewards" element={<RewardsPage />} />
+        <Route path="/publish" element={<PublishPage />} />
+        <Route path="/mentorship" element={<MentorshipPage />} />
       </Routes>
 
       {!hideFooter && <Footer />}

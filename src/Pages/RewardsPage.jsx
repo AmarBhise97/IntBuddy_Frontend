@@ -1,4 +1,3 @@
-
 function RewardsPage() {
   return (
     <div className="container py-5">

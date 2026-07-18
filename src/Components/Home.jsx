@@ -22,7 +22,7 @@ function Home() {
     width: "140%",
     height: "110vh",
     maxWidth: "1800px",
-    filter: "drop-shadow(0 0 20px rgba(0,0,0,0.1))",
+    filter: "drop-shadow(0 0 20px rgba( 0, 0, 0,1))",
     animation: "float 4s ease-in-out infinite"
   };
 

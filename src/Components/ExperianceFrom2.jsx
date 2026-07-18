@@ -1,13 +1,71 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import api from "../axiosConfig";
 
-function ExperianceForm2({ closeModal }) {
-  const [count, setCount] = useState(1);
+function ExperianceForm2() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const experienceId = location.state?.experienceId;
+
+  const [questions, setQuestions] = useState([
+    {
+      question: "",
+      answer: ""
+    }
+  ]);
 
   const addQuestion = () => {
-    setCount(count + 1);
+
+    setQuestions([
+      ...questions,
+      {
+        question: "",
+        answer: ""
+      }
+    ]);
+
+  };
+
+  const handleChange = (index, field, value) => {
+
+    const data = [...questions];
+
+    data[index][field] = value;
+
+    setQuestions(data);
+
+  };
+
+  const submitQuestions = async () => {
+
+    try {
+
+      await api.post("/anonymous/question/save", {
+
+        experienceId: experienceId,
+
+        questions: questions
+
+      });
+
+      alert("Interview Experience Submitted Successfully");
+
+      navigate("/Home");
+
+    } catch (err) {
+
+      console.log(err);
+
+      alert("Failed to Save");
+
+    }
+
   };
 
   return (
+
     <div
       className="modal d-block position-fixed top-0 start-0 w-100 h-100"
       style={{
@@ -15,7 +73,9 @@ function ExperianceForm2({ closeModal }) {
         zIndex: 1050
       }}
     >
+
       <div className="modal-dialog modal-lg modal-dialog-centered">
+
         <div
           className="modal-content p-4 rounded-4"
           style={{
@@ -24,77 +84,85 @@ function ExperianceForm2({ closeModal }) {
           }}
         >
 
-          {/* Close Button */}
-          <button
-            type="button"
-            className="btn-close ms-auto"
-            onClick={closeModal}
-          ></button>
+          <h3 className="fw-bold mb-4">
+            Interview Questions
+          </h3>
 
-          {/* Heading */}
-          <h3 className="fw-bold mb-4">Interview Experience</h3>
-          <h5 className="fw-bold mb-3">Interview Questions</h5>
+          {questions.map((item, index) => (
 
-          <div className="row">
+            <div key={index} className="mb-4">
 
-            {[...Array(count)].map((_, i) => (
-              <div key={i} className="col-12 mb-4">
+              <label className="fw-semibold">
+                Question {index + 1}
+              </label>
 
-                <label className="form-label fw-semibold">
-                  Interview Question {i + 1}
-                </label>
+              <input
+                type="text"
+                className="form-control mb-2"
+                value={item.question}
+                onChange={(e) =>
+                  handleChange(
+                    index,
+                    "question",
+                    e.target.value
+                  )
+                }
+              />
 
-                <input
-                  type="text"
-                  className="form-control mb-2"
-                  placeholder="Enter question"
-                />
+              <label className="fw-semibold">
+                Answer
+              </label>
 
-                <label className="form-label fw-semibold">
-                  Answer
-                </label>
+              <textarea
+                rows="3"
+                className="form-control"
+                value={item.answer}
+                onChange={(e) =>
+                  handleChange(
+                    index,
+                    "answer",
+                    e.target.value
+                  )
+                }
+              />
 
-                <textarea
-                  className="form-control"
-                  rows="3"
-                  placeholder="Write answer..."
-                ></textarea>
-
-              </div>
-            ))}
-
-            {/* Add More */}
-            <div className="col-12">
-              <button
-                type="button"
-                className="btn btn-link text-warning fw-semibold p-0"
-                onClick={addQuestion}
-              >
-                + Add Another
-              </button>
             </div>
 
-          </div>
+          ))}
 
-          {/* Buttons */}
-          <div className="d-flex justify-content-between mt-4">
-            <button className="btn btn-warning px-4">
+          <button
+            className="btn btn-link text-warning"
+            onClick={addQuestion}
+          >
+            + Add Another
+          </button>
+
+          <div className="mt-4">
+
+            <button
+              className="btn btn-warning me-2"
+              onClick={submitQuestions}
+            >
               Submit
             </button>
 
             <button
-              type="button"
-              className="btn btn-outline-secondary px-4"
-              onClick={closeModal}
+              className="btn btn-secondary"
+              onClick={() => navigate("/Home")}
             >
               Close
             </button>
+
           </div>
 
         </div>
+
       </div>
+
     </div>
+
   );
+
 }
 
 export default ExperianceForm2;

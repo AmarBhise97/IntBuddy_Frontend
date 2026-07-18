@@ -26,19 +26,20 @@ function Benefits() {
     "Get a chance to earn exciting rewards and recognition for contributing valuable interview experiences.",
   path: "/rewards",
 },
-    {
-      icon: "bi-journal-check",
-      title: "Get Published",
-      description:
-        "Have your interview story featured on IntBuddy and inspire thousands of aspiring candidates.",
-      path: "/community",
-    },
-    {
-      icon: "bi-people-fill",
-      title: "Mentorship Impact",
-      description:
-        "Help students and job seekers prepare better by sharing real-world interview insights.",
-    },
+   {
+  icon: "bi-journal-check",
+  title: "Get Published",
+  description:
+    "Have your interview story featured on IntBuddy and inspire thousands of aspiring candidates.",
+  path: "/publish",
+},
+   {
+  icon: "bi-people-fill",
+  title: "Mentorship Impact",
+  description:
+    "Help students and job seekers prepare better by sharing real-world interview insights.",
+  path: "/mentorship",
+},
   ];
 
   return (

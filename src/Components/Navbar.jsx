@@ -1,48 +1,52 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-//import axios from "axios";
-// किंवा
- // import api from "../axiosConfig";
-
-
 import intbuddylogo from "../assets/intbuddylogo.png";
 
 function Navbar() {
+
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
- 
-
-const handleSearch = (e) => {
-
+  const handleSearch = (e) => {
     e.preventDefault();
 
-    if(search.trim()==="") return;
+    if (search.trim() === "") return;
 
     navigate(`/search?keyword=${search}`);
-
-};
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top border-bottom">
-      <div className="container-fluid">
+    <nav
+      className="navbar navbar-expand-lg fixed-top"
+      style={{
+       
+           background: "#1F1F1F",
+
+
+
+    boxShadow: "0 3px 18px rgba(0,0,0,0.45)",
+    borderBottom: "1px solid rgba(12, 12, 12, 0.12)",
+        minHeight: "80px",
+      }}
+    >
+      <div className="container-fluid px-4">
 
         {/* Logo */}
-        <Link className="navbar-brand d-flex align-items-center ms-2" to="/">
+
+        <Link className="navbar-brand me-4" to="/">
           <img
             src={intbuddylogo}
             alt="IntBuddy Logo"
-            className="img-fluid"
             style={{
-              height: "70px",
+              height: "58px",
               width: "auto",
               objectFit: "contain",
             }}
           />
         </Link>
 
-        {/* Toggle Button */}
+        {/* Mobile Toggle */}
+
         <button
           className="navbar-toggler"
           type="button"
@@ -52,65 +56,144 @@ const handleSearch = (e) => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Navbar Content */}
-        <div className="collapse navbar-collapse" id="navbarNav">
+        {/* Navbar */}
 
-          {/* Links */}
-          <ul className="navbar-nav mx-lg-3 mb-2 mb-lg-0">
+        <div
+          className="collapse navbar-collapse"
+          id="navbarNav"
+        >
+
+          {/* Menu */}
+
+          <ul className="navbar-nav me-4">
+
             <li className="nav-item">
-              <Link className="nav-link text-warning fw-semibold" to="/">
+
+              <Link
+                to="/"
+                className="nav-link fw-bold px-3"
+                style={{
+                  color: "#D4AF37",
+                  fontSize: "21px",
+                }}
+              >
                 Home
               </Link>
+
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link text-warning fw-semibold" to="/About">
+
+              <Link
+                to="/About"
+                className="nav-link fw-bold px-3"
+                style={{
+                  color: "#D4AF37",
+                  fontSize: "21px",
+                }}
+              >
                 About
               </Link>
+
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link text-warning fw-semibold" to="/Contact">
+
+              <Link
+                to="/Contact"
+                className="nav-link fw-bold px-3"
+                style={{
+                  color: "#D4AF37",
+                  fontSize: "21px",
+                }}
+              >
                 Contact
               </Link>
+
             </li>
+
           </ul>
 
-          {/* Search Bar */}
-             <form
-               className="d-flex flex-grow-1 mx-lg-3 my-2 my-lg-0"
-               role="search"
-               onSubmit={handleSearch}
-              >
+          {/* Search */}
+
+          <form
+            className="d-flex flex-grow-1 mx-4 my-3 my-lg-0"
+            onSubmit={handleSearch}
+          >
+
             <input
-              className="form-control rounded-pill me-2"
               type="search"
+              className="form-control rounded-pill me-2"
               placeholder="Search Company, Role, Position..."
-               value={search}
-               onChange={(e) => setSearch(e.target.value)}
-               />
-            <button className="btn btn-warning rounded-pill px-4" type="submit">
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                background: "#FFFFFF",
+                color: "#000",
+                border: "none",
+                height: "45px",
+                fontSize: "16px",
+                paddingLeft: "20px",
+              }}
+            />
+
+            <button
+              className="btn rounded-pill fw-bold px-4"
+              type="submit"
+              style={{
+                background: "#D4AF37",
+                color: "#222",
+                border: "none",
+                minWidth: "100px",
+                height: "45px",
+              }}
+            >
               Search
             </button>
-          </form>
-        
 
-          {/* Buttons */}
-          <div className="d-flex flex-column flex-lg-row gap-2 me-3 mt-2 mt-lg-0">
+          </form>
+
+          {/* Login Register */}
+
+          <div className="d-flex gap-2">
+
             <Link
-              className="btn btn-outline-warning rounded-pill px-4"
               to="/Login"
+              className="btn rounded-pill px-4 fw-semibold"
+              style={{
+                border: "2px solid #D4AF37",
+                color: "#D4AF37",
+                minWidth: "100px",
+                height: "45px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
               Login
             </Link>
 
             <Link
-              className="btn btn-warning rounded-pill px-4"
               to="/Registration"
+              className="btn rounded-pill px-4 fw-semibold"
+              style={{
+                background: "#D4AF37",
+                color: "#222",
+                border: "none",
+                minWidth: "110px",
+                height: "45px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
               Register
             </Link>
+
           </div>
 
         </div>
+
       </div>
     </nav>
   );
