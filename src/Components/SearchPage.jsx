@@ -90,6 +90,24 @@ function SearchPage() {
               <p className="text-secondary mb-1">
                 <strong>Candidate :</strong> {item.fullName}
               </p>
+              {item.resumeName && (
+    <div className="mt-3">
+
+        <p className="mb-2">
+            <strong>Resume :</strong> {item.resumeName}
+        </p>
+
+        <a
+            href={`http://localhost:9090/Experiance/resume/${item.experiance_ID}`}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-danger"
+        >
+            Download Resume
+        </a>
+
+    </div>
+)}
 
                <button
     className="btn btn-warning mt-3"

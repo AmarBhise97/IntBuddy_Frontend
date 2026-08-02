@@ -29,41 +29,71 @@ function Registration() {
   const [loading, setLoading] = useState(false);
 
   // HANDLE INPUT CHANGE
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
+  const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+
+  try {
+    if (name === "email") {
+      const res = await api.get(`/users/check-email?email=${value}`);
+
+      if (res.data) {
+        setMessage("Email already registered");
+      } else {
+        setMessage("");
+      }
+    }
+
+    if (name === "phoneno" && value.length === 10) {
+      const res = await api.get(`/users/check-phone?phoneno=${value}`);
+
+      if (res.data) {
+        setMessage("Phone number already registered");
+      } else {
+        setMessage("");
+      }
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   // SEND OTP
-  // SEND OTP
-const sendOtp = async () => {
+ const sendOtp = async () => {
 
   if (!formData.email) {
     setMessage("Please enter email");
     return;
-}
+  }
 
   try {
 
     setLoading(true);
 
-   const response = await api.post(
-    `/users/sendotp/${formData.email}`
-);
+    // Duplicate Email Check
+    const check = await api.get(`/users/check-email?email=${formData.email}`);
+
+    if (check.data) {
+      setMessage("Email already registered");
+      return;
+    }
+
+    // Send OTP
+    const response = await api.post(`/users/sendotp/${formData.email}`);
 
     console.log(response.data);
 
     setOtpSent(true);
-
     setMessage("OTP sent to your email.");
 
   } catch (error) {
 
     console.log(error);
-
     setMessage("Failed to send OTP");
 
   } finally {

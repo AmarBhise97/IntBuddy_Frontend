@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 //import axios from "axios";
 import api from "../axiosConfig";
@@ -9,6 +9,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function AddExperience() {
 
   const [loading, setLoading] = useState(false);
+
+  const [resume, setResume] = useState(null);
+
+  const fileInputRef = useRef(null);
 
   const [message, setMessage] = useState("");
 
@@ -85,9 +89,42 @@ function AddExperience() {
         }
       };
 
-      const response = await api.post(
-  "/Experiance/add",
-  experienceData
+    const form = new FormData();
+
+form.append(
+"experience",
+new Blob(
+[
+JSON.stringify(experienceData)
+],
+{
+type:"application/json"
+}
+)
+);
+
+if(resume){
+
+form.append("resume",resume);
+
+}
+
+const response = await api.post(
+
+"/Experiance/add",
+
+form,
+
+{
+
+headers:{
+
+"Content-Type":"multipart/form-data"
+
+}
+
+}
+
 );
 
       console.log(response.data);
@@ -105,6 +142,13 @@ function AddExperience() {
       });
      
       setDetailsList([""]);
+      setResume(null);
+
+if(fileInputRef.current){
+
+fileInputRef.current.value="";
+
+}
 
     } catch (error) {
 
@@ -311,6 +355,67 @@ function AddExperience() {
     </div>
 
   ))}
+
+
+
+
+</div>
+
+<div className="mb-4">
+
+<label className="fw-bold mb-2">
+
+Upload Resume (PDF only, Max 1 MB)
+
+</label>
+
+<input
+
+ref={fileInputRef}
+
+type="file"
+
+accept=".pdf"
+
+className="form-control"
+
+onChange={(e)=>{
+
+const file=e.target.files[0];
+
+if(!file) return;
+
+if(file.type!=="application/pdf"){
+
+alert("Only PDF file allowed");
+
+e.target.value="";
+
+return;
+
+}
+
+if(file.size>1024*1024){
+
+alert("Resume size should be less than 1 MB");
+
+e.target.value="";
+
+return;
+
+}
+
+setResume(file);
+
+}}
+
+/>
+
+<small className="text-muted">
+
+Only PDF • Maximum 1 MB
+
+</small>
 
 </div>
 
@@ -715,7 +820,21 @@ const loadExperiences = async (id) => {
                             </div>
                        </div>
 
-            </div>
+                         {/* Resume Download Button */}
+    {exp.resumeName && (
+        <a
+            href={`http://localhost:9090/Experiance/resume/${exp.experiance_ID}`}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-danger btn-sm mt-3"
+        >
+            Download Resume
+        </a>
+    )}
+
+</div>
+
+          
 
         ))
 

@@ -15,6 +15,10 @@ import CommunityPage from "./Pages/CommunityPage";
 import RewardsPage from "./Pages/RewardsPage";
 import PublishPage from "./Pages/PublishPage";
 import MentorshipPage from "./Pages/MentorshipPage";
+import InterviewAI from "./Components/AI/InterviewAI";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 import ExperianceForm2 from "./Components/ExperianceFrom2";
 import CustomerDashboard from "./Components/Dashboard";
@@ -51,6 +55,7 @@ function App() {
         <Route path="/publish" element={<PublishPage />} />
         <Route path="/mentorship" element={<MentorshipPage />} />
       </Routes>
+         <InterviewAI/>
 
       {!hideFooter && <Footer />}
     </>
