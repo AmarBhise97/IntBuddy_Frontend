@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 //import axios from "axios";
 import api from "../axiosConfig";
 
+import "./CustomerDashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -15,6 +16,8 @@ function AddExperience() {
   const fileInputRef = useRef(null);
 
   const [message, setMessage] = useState("");
+
+
 
   const [formData, setFormData] = useState({
     companyName: "",
@@ -54,122 +57,231 @@ function AddExperience() {
   setDetailsList(updated);
 };
   // SUBMIT EXPERIENCE
-  const submitExperience = async (e) => {
+ const submitExperience = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  try {
 
-      setLoading(true);
+    setLoading(true);
+    setMessage("");
 
-      // GET USER DATA
-      const user = JSON.parse(
-        localStorage.getItem("userData")
+    // ==============================
+    // GET LOGGED USER
+    // ==============================
+
+    const storedUser = localStorage.getItem("userData");
+
+    if (!storedUser) {
+
+      setMessage("Please login again.");
+
+      navigate("/login");
+
+      return;
+    }
+
+    const user = JSON.parse(storedUser);
+
+    console.log("Logged User:", user);
+    console.log("Logged User ID:", user.id);
+
+    if (!user.id) {
+
+      setMessage(
+        "User ID is missing. Please logout and login again."
       );
 
-      const experienceData = {
+      return;
+    }
 
-        companyName: formData.companyName,
 
-        position: formData.position,
+    // ==============================
+    // EXPERIENCE OBJECT
+    // ==============================
 
-        role: formData.role,
+    const experienceData = {
 
-        experianceinyear: formData.experianceinyear,
+      companyName: formData.companyName,
 
-        details: detailsList
-  .filter(detail => detail.trim() !== "")
-  .map((detail, index) => `${index + 1}. ${detail}`)
-  .join("\n"),
+      position: formData.position,
 
-        result: formData.result === "true",
+      role: formData.role,
 
-        user: {
-          id: user.id
-        }
-      };
+      experianceinyear:
+        formData.experianceinyear,
+
+      details: detailsList
+        .filter(detail => detail.trim() !== "")
+        .map(
+          (detail, index) =>
+            `${index + 1}. ${detail}`
+        )
+        .join("\n"),
+
+      result:
+        formData.result === "true",
+
+      // IMPORTANT
+      user: {
+        id: Number(user.id)
+      }
+    };
+
+
+    console.log(
+      "Experience Data:",
+      experienceData
+    );
+
+
+    // ==============================
+    // CREATE FORM DATA
+    // ==============================
 
     const form = new FormData();
+    
 
-form.append(
-"experience",
-new Blob(
-[
-JSON.stringify(experienceData)
-],
-{
-type:"application/json"
-}
-)
+
+    // Experience JSON
+    form.append(
+      "experience",
+      new Blob(
+        [
+          JSON.stringify(experienceData)
+        ],
+        {
+          type: "application/json"
+        }
+      )
+    );
+    form.append(
+    "userId",
+    String(user.id)
 );
 
-if(resume){
 
-form.append("resume",resume);
+    // Resume
+    if (resume) {
 
-}
+      form.append(
+        "resume",
+        resume
+      );
 
-const response = await api.post(
+    }
 
-"/Experiance/add",
 
-form,
+    console.log(
+      "User ID sent inside experience:",
+      user.id
+    );
 
-{
 
-headers:{
+    // ==============================
+    // API CALL
+    // ==============================
 
-"Content-Type":"multipart/form-data"
-
-}
-
-}
-
+    const response = await api.post(
+    "/Experiance/add",
+    form
 );
 
-      console.log(response.data);
 
-      setMessage("Experience Added Successfully ✅");
-
-      // CLEAR FORM
-      setFormData({
-        companyName: "",
-        position: "",
-        role: "",
-        experianceinyear: "",
-        details: "",
-        result: "",
-      });
-     
-      setDetailsList([""]);
-      setResume(null);
-
-if(fileInputRef.current){
-
-fileInputRef.current.value="";
-
+    console.log(
+      "Experience Added:",
+      response.data
+    );
+    if (onExperienceAdded) {
+  await onExperienceAdded();
 }
 
-    } catch (error) {
+setMessage("Experience Added Successfully ✅");
 
-  
 
-  if (error.response) {
+    // ==============================
+    // SUCCESS
+    // ==============================
 
-    setMessage(error.response.data.message || "Server Error");
+    setMessage(
+      "Experience Added Successfully ✅"
+    );
 
-  } else if (error.request) {
+    alert(
+      "Interview Experience Added Successfully"
+    );
 
-    setMessage("Cannot connect to Spring Boot Server");
 
-  } else {
+    // ==============================
+    // RESET
+    // ==============================
 
-    setMessage("Something went wrong");
+    setFormData({
+
+      companyName: "",
+      position: "",
+      role: "",
+      experianceinyear: "",
+      details: "",
+      result: ""
+
+    });
+
+    setDetailsList([""]);
+
+    setResume(null);
+
+
+    if (fileInputRef.current) {
+
+      fileInputRef.current.value = "";
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "Add Experience Error:",
+      error
+    );
+
+    console.error(
+      "Backend Response:",
+      error.response?.data
+    );
+
+
+    if (error.response) {
+
+      setMessage(
+        error.response.data?.message ||
+        error.response.data ||
+        "Server Error"
+      );
+
+    } else if (error.request) {
+
+      setMessage(
+        "Cannot connect to Spring Boot Server"
+      );
+
+    } else {
+
+      setMessage(
+        "Something went wrong"
+      );
+
+    }
+
+  } finally {
+
+    setLoading(false);
 
   }
-}
-  };
 
+};
+    
   return (
 
     <div className="card border-0 shadow-lg rounded-5 p-5 bg-white">
@@ -442,64 +554,113 @@ function CustomerDashboard() {
 
   const [activeTab, setActiveTab] = useState("overview");
   const [experiences, setExperiences] = useState([]);
+   
 
- const [user, setUser] = useState({
+
+  const [user, setUser] = useState({
     id: "",
     fullName: "Guest User",
     email: "",
     phoneno: ""
-});
+  });
 
   const navigate = useNavigate();
 
-  // GET USER DATA
- useEffect(() => {
+  useEffect(() => {
 
-    const data = localStorage.getItem("userData");
+  const data = localStorage.getItem("userData");
 
-    if (data) {
+  if (data) {
 
-        const parsed = JSON.parse(data);
+    const parsed = JSON.parse(data);
 
-        console.log(parsed);
+    console.log("Logged User:", parsed);
 
-        setUser({
-            id: parsed.id,
-            fullName: parsed.fullName,
-            email: parsed.email,
-            phoneno: parsed.phoneno
-        });
+    setUser({
+      id: parsed.id,
+      fullName: parsed.fullName,
+      email: parsed.email,
+      phoneno: parsed.phoneno
+    });
 
-        if (parsed.id) {
+  }
 
-            loadExperiences(parsed.id);
-
-        }
-
-    }
+  // Load ALL users' interview experiences
+  loadExperiences();
 
 }, []);
 
 
+  const loadExperiences = async () => {
+  try {
 
+    const storedUser =
+      localStorage.getItem("userData");
 
-
-const loadExperiences = async (id) => {
-    try {
-
-        const response = await api.get(`/users/${id}`);
-
-        console.log("Response:", response.data);
-        console.log("Experience:", response.data.experiance);
-        console.log("Length:", response.data.experiance.length);
-
-        setExperiences(response.data.experiance || []);
-
-    } catch (error) {
-        console.log(error);
+    if (!storedUser) {
+      setExperiences([]);
+      return;
     }
+
+    const loggedUser =
+      JSON.parse(storedUser);
+
+    console.log(
+      "Logged User ID:",
+      loggedUser.id
+    );
+
+    const response = await api.get(
+      "/Experiance/getexperiance",
+      {
+        params: {
+          page: 0,
+          size: 1000,
+          sortBy: "experiance_ID",
+          direction: "desc"
+        }
+      }
+    );
+
+    console.log(
+      "All Experiences:",
+      response.data.data
+    );
+
+    const allExperiences =
+      response.data.data || [];
+
+    /*
+     * Backend currently returns fullName,
+     * so frontend filters using logged user's name.
+     */
+    const myExperiences =
+      allExperiences.filter(
+        (experience) =>
+          experience.fullName ===
+          loggedUser.fullName
+      );
+
+    console.log(
+      "MY EXPERIENCES:",
+      myExperiences
+    );
+
+    setExperiences(
+      myExperiences
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Loading experiences failed:",
+      error
+    );
+
+    setExperiences([]);
+  }
 };
-  // LOGOUT
+
   const handleLogout = () => {
 
     localStorage.removeItem("userData");
@@ -507,359 +668,671 @@ const loadExperiences = async (id) => {
     navigate("/login");
   };
 
-  // SIDEBAR BUTTON STYLE
-  const getBtnClass = (tab) =>
-    `btn w-100 text-start mb-3 border-0 rounded-4 py-3 fw-semibold ${
-      activeTab === tab
-        ? "text-dark bg-warning shadow-sm"
-        : "text-secondary bg-white"
-    }`;
+
+  const getInitials = (name) => {
+
+    if (!name) return "U";
+
+    return name
+      .split(" ")
+      .map(word => word[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+  };
+
 
   return (
 
-    <div
-      className="min-vh-100"
+    <div className="dashboard-page">
+
+
+     {/* =========================
+    NAVBAR
+========================= */}
+{/* =========================
+    NAVBAR
+========================= */}
+
+<nav
+  style={{
+    height: "72px",
+    width: "100%",
+    background: "#151619",
+    display: "flex",
+    alignItems: "center",
+    padding: "0 25px",
+    boxSizing: "border-box",
+    position: "relative",
+    zIndex: 1000,
+  }}
+>
+
+  {/* LOGO */}
+  <Link
+    to="/"
+    style={{
+      color: "#ffffff",
+      textDecoration: "none",
+      fontSize: "22px",
+      fontWeight: "800",
+      minWidth: "120px",
+    }}
+  >
+    Int<span style={{ color: "#ffbf00" }}>Buddy</span>
+  </Link>
+
+
+  {/* HOME ABOUT CONTACT */}
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "32px",
+      marginLeft: "45px",
+      whiteSpace: "nowrap",
+    }}
+  >
+
+    <Link
+      to="/"
       style={{
-        backgroundColor: "#f5f7fb"
+        color: "#ffbf00",
+        textDecoration: "none",
+        fontSize: "15px",
+        fontWeight: "600",
+      }}
+    >
+      Home
+    </Link>
+
+    <Link
+      to="/about"
+      style={{
+        color: "#ffbf00",
+        textDecoration: "none",
+        fontSize: "15px",
+        fontWeight: "600",
+      }}
+    >
+      About
+    </Link>
+
+    <Link
+      to="/contact"
+      style={{
+        color: "#ffbf00",
+        textDecoration: "none",
+        fontSize: "15px",
+        fontWeight: "600",
+      }}
+    >
+      Contact
+    </Link>
+
+  </div>
+
+
+  {/* MOVING MESSAGE */}
+  <div
+    style={{
+      flex: 1,
+      height: "38px",
+      marginLeft: "40px",
+      marginRight: "30px",
+      overflow: "hidden",
+      display: "flex",
+      alignItems: "center",
+      background: "#202126",
+      border: "1px solid rgba(255,191,0,0.25)",
+      borderRadius: "20px",
+    }}
+  >
+
+    <div
+      style={{
+        whiteSpace: "nowrap",
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        color: "#ffffff",
+        fontSize: "13px",
+        fontWeight: "500",
+        paddingLeft: "100%",
+        animation: "navbarMessage 20s linear infinite",
       }}
     >
 
-      {/* NAVBAR */}
-      <nav
-        className="navbar navbar-expand-lg px-4 shadow-sm"
+      <i
+        className="bi bi-megaphone-fill"
         style={{
-          background: "#ffc107",
-          height: "70px"
+          color: "#ffbf00",
+        }}
+      ></i>
+
+      Please share your interview experience. It can be a great help to another candidate and inspire others to prepare confidently.
+
+    </div>
+
+  </div>
+
+
+  {/* USER */}
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+      minWidth: "150px",
+      justifyContent: "flex-end",
+    }}
+  >
+
+    <div className="dashboard-avatar-small">
+      {getInitials(user.fullName)}
+    </div>
+
+    <div>
+
+      <div
+        style={{
+          color: "#ffffff",
+          fontSize: "13px",
+          fontWeight: "700",
         }}
       >
+        {user.fullName}
+      </div>
 
-        {/* LOGO */}
-        <Link
-          className="navbar-brand fw-bold fs-2 text-dark"
-          to="/"
-        >
-          IntBuddy
-        </Link>
+      <div
+        style={{
+          color: "#999",
+          fontSize: "10px",
+        }}
+      >
+        Interview User
+      </div>
 
-        {/* USER */}
-        <div className="ms-auto d-flex align-items-center">
+    </div>
 
-              {/* <div
-  className="rounded-circle shadow d-flex justify-content-center align-items-center mx-auto"
-  style={{
-    width: "160px",
-    height: "160px",
-    backgroundColor: "#ffc107",
-  }}
->
-  <i
-    className="bi bi-person-circle"
-    style={{
-      fontSize: "150px",
-      color: "rgb(88, 14, 58)",
-    }}
-  ></i>
-</div> */}
+  </div>
 
-          <div className="ms-3">
+</nav>
 
-            <h6 className="mb-0 fw-bold text-dark">
 
-              {user.fullName}
+<style>
+{`
+@keyframes navbarMessage {
+  from {
+    transform: translateX(0);
+  }
 
-            </h6>
+  to {
+    transform: translateX(-100%);
+  }
+}
+`}
+</style>
 
-          </div>
 
+      {/* =========================
+          SIDEBAR
+      ========================= */}
+
+      <aside className="dashboard-sidebar">
+
+        <div className="sidebar-title">
+          Workspace
         </div>
 
-      </nav>
 
-      <div className="container-fluid">
+        <button
+          className={`sidebar-btn ${
+            activeTab === "overview"
+              ? "active"
+              : ""
+          }`}
+          onClick={() =>
+            setActiveTab("overview")
+          }
+        >
 
-        <div className="row">
+          <i className="bi bi-grid-1x2-fill"></i>
 
-          {/* SIDEBAR */}
-          <div
-            className="col-md-3 col-lg-2 bg-white shadow-sm p-4"
-            style={{
-              minHeight: "100vh"
-            }}
-          >
+          Overview
 
-            <button
-              onClick={() => setActiveTab("overview")}
-              className={getBtnClass("overview")}
-            >
+        </button>
 
-              <i className="bi bi-grid-fill me-2"></i>
 
-              Overview
+        <button
+          className={`sidebar-btn ${
+            activeTab === "experience"
+              ? "active"
+              : ""
+          }`}
+          onClick={() =>
+            setActiveTab("experience")
+          }
+        >
 
-            </button>
+          <i className="bi bi-plus-circle-fill"></i>
 
-            <button
-              onClick={() => setActiveTab("experience")}
-              className={getBtnClass("experience")}
-            >
+          Add Experience
 
-              <i className="bi bi-plus-circle-fill me-2"></i>
+        </button>
 
-              Add Experience
 
-            </button>
+        <hr className="sidebar-divider" />
 
-            <hr />
 
-            <button
-              onClick={handleLogout}
-              className="btn btn-outline-danger w-100 rounded-4 py-3 fw-semibold"
-            >
+        <button
+          className="sidebar-btn sidebar-logout"
+          onClick={handleLogout}
+        >
 
-              <i className="bi bi-box-arrow-right me-2"></i>
+          <i className="bi bi-box-arrow-right"></i>
 
-              Logout
+          Logout
 
-            </button>
+        </button>
 
-          </div>
+      </aside>
 
-          {/* MAIN CONTENT */}
-          <div className="col-md-9 col-lg-10 p-5">
 
-            {/* OVERVIEW */}
-            {activeTab === "overview" && (
+      {/* =========================
+          MAIN
+      ========================= */}
 
-              <div className="card border-0 shadow-lg rounded-5 p-5 bg-white">
+      <main className="dashboard-main">
 
-                <div className="row">
+        <div className="dashboard-container">
 
-                  {/* LEFT */}
-                  <div
-                   className="col-md-4 text-center border-end position-sticky"
-                   style={{
-                   top: "20px",
-                   height: "fit-content"
-                   }}
->
 
-                   <div
-  className="rounded-circle shadow d-flex justify-content-center align-items-center mx-auto"
-  style={{
-    width: "160px",
-    height: "160px",
-    backgroundColor: "#ffc107",
-  }}
->
-  <i
-    className="bi bi-person-circle"
-    style={{
-      fontSize: "170px",
-      color: "#675b61",
-    }}
-  ></i>
-</div>
+          {/* =========================
+              OVERVIEW
+          ========================= */}
 
-                    <h2 className="fw-bold mt-4 text-dark">
+          {activeTab === "overview" && (
 
-                      {user.fullName}
+            <>
 
-                    </h2>
+              {/* WELCOME */}
 
-                    <span className="badge bg-warning text-dark px-4 py-2 rounded-pill fs-6">
+              <div className="dashboard-welcome">
 
-                      User
+                <div>
 
+                  <h1>
+                    Welcome back,{" "}
+                    <span>
+                      {user.fullName?.split(" ")[0]}
                     </span>
+                    👋
+                  </h1>
+
+                  <p>
+                    Manage your interview journey
+                    and share your experiences.
+                  </p>
+
+                </div>
+
+                <div className="dashboard-date">
+
+                  <i className="bi bi-calendar3 me-2"></i>
+
+                  Interview Dashboard
+
+                </div>
+
+              </div>
+
+
+              {/* STATS */}
+
+              <div className="stats-grid">
+
+
+                <div className="stat-card">
+
+                  <div className="stat-top">
+
+                    <div className="stat-icon">
+                      <i className="bi bi-person-check-fill"></i>
+                    </div>
 
                   </div>
 
-                  {/* RIGHT */}
-                  <div
-                      className="col-md-8 px-5"
-                      style={{
-                      maxHeight: "80vh",
-                       overflowY: "auto"
-                        }}
->
+                  <div className="stat-label">
+                    ACCOUNT STATUS
+                  </div>
 
-                    <h2 className="fw-bold text-dark mb-4">
+                  <div className="stat-value">
+                    Active
+                  </div>
 
-                      User Overview
-
-                    </h2>
+                </div>
 
 
-                    {/* EMAIL */}
-                    <div
-                      className="d-flex align-items-center p-4 rounded-4 shadow-sm mb-4"
-                      style={{
-                        backgroundColor: "#e7e4ec"
+                <div className="stat-card">
 
-                      }}
-                    >
+                  <div className="stat-top">
 
-                      <div
-                        className="rounded-circle d-flex justify-content-center align-items-center"
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          backgroundColor: "#ffc107"
-                        }}
-                      >
-
-                        <i className="bi bi-envelope-fill text-dark fs-4"></i>
-
-                      </div>
-
-                      <div className="ms-4">
-
-                        <small className="text-muted">
-                          Email Address
-                        </small>
-
-                        <h5 className="fw-bold text-dark mb-0">
-
-                          {user.email}
-
-                        </h5>
-
-                      </div>
-
+                    <div className="stat-icon">
+                      <i className="bi bi-briefcase-fill"></i>
                     </div>
 
-                    {/* NAME */}
-                    <div
-                      className="d-flex align-items-center p-4 rounded-4 shadow-sm"
-                      style={{
-                        backgroundColor: "#e7e4ec"
-                      }}
-                    >
+                  </div>
 
-                      <div
-                        className="rounded-circle d-flex justify-content-center align-items-center"
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          backgroundColor: "#ffc107"
-                        }}
-                      >
+                  <div className="stat-label">
+                    INTERVIEW EXPERIENCES
+                  </div>
 
-                        <i className="bi bi-person-fill text-dark fs-4"></i>
-                        
+                  <div className="stat-value">
+                    {experiences.length}
+                  </div>
+
+                </div>
+
+
+                <div className="stat-card">
+
+                  <div className="stat-top">
+
+                    <div className="stat-icon">
+                      <i className="bi bi-graph-up-arrow"></i>
+                    </div>
+
+                  </div>
+
+                  <div className="stat-label">
+                    COMMUNITY STATUS
+                  </div>
+
+                  <div className="stat-value">
+                    Contributor
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              {/* PROFILE */}
+
+              <div className="profile-card">
+
+                <div className="section-heading">
+                  Profile Overview
+                </div>
+
+                <div className="profile-content">
+
+                  <div className="profile-avatar">
+
+                    {getInitials(
+                      user.fullName
+                    )}
+
+                  </div>
+
+
+                  <div>
+
+                    <h3 className="profile-name">
+                      {user.fullName}
+                    </h3>
+
+                    <div className="profile-email">
+                      {user.email}
+                    </div>
+
+
+                    <div className="profile-details">
+
+                      <div className="profile-info">
+
+                        <i className="bi bi-envelope-fill"></i>
+
+                        {user.email}
 
                       </div>
-                      
 
-                      <div className="ms-4">
 
-                        <small className="text-muted">
-                          Full Name
-                        </small>
+                      {user.phoneno && (
 
-                        <h5 className="fw-bold text-dark mb-0">
+                        <div className="profile-info">
 
-                          {user.fullName}
+                          <i className="bi bi-telephone-fill"></i>
 
-                        </h5>
+                          {user.phoneno}
 
-                      </div>
+                        </div>
+
+                      )}
 
                     </div>
-                    <hr className="my-5" />
-
-<h3 className="fw-bold mb-4">
-    My Interview Experiences
-</h3>
-
-{
-    experiences.length === 0 ? (
-
-        <div className="alert alert-warning">
-            No Experience Added
-        </div>
-
-    ) : (
-
-        experiences.map((exp, index) => (
-
-            <div
-                key={index}
-                className="card shadow-sm mb-3 p-4"
-            >
-                <h4>{exp.companyName}</h4>
-
-                <p>
-                    <b>Position :</b> {exp.position}
-                </p>
-
-                <p>
-                    <b>Role :</b> {exp.role}
-                </p>
-
-                <p>
-                    <b>Experience :</b> {exp.experianceinyear}
-                </p>
-
-                <p>
-                    <b>Result :</b>{" "}
-                    {exp.result ? "Selected" : "Rejected"}
-                </p>
-
-                      <div className="mt-3">
-                         <b>Interview Questions :</b>
-
-                           <div
-                             className="mt-2"
-                                style={{
-                                whiteSpace: "pre-line",
-                               lineHeight: "2"
-                                 }}
-                              >
-                                {exp.details}
-                            </div>
-                       </div>
-
-                         {/* Resume Download Button */}
-    {exp.resumeName && (
-        <a
-            href={`http://localhost:9090/Experiance/resume/${exp.experiance_ID}`}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-danger btn-sm mt-3"
-        >
-            Download Resume
-        </a>
-    )}
-
-</div>
-
-          
-
-        ))
-
-    )
-}
 
                   </div>
 
                 </div>
 
               </div>
+
+
+             
+            </>
+            
+
+          )}
+
+
+{/* =========================
+    EXPERIENCES
+========================= */}
+
+<div className="experience-section">
+
+  <div className="section-heading">
+    My Interview Experiences
+  </div>
+
+
+{experiences.length === 0 ? (
+
+    <div className="empty-experience">
+
+      <div className="empty-icon">
+
+        <i className="bi bi-search"></i>
+
+      </div>
+
+
+     <h5>
+  No Experience Added Yet
+</h5>
+
+<p>
+  You can share your interview experience. Please add your experience
+  and help other candidates.
+</p>
+
+<button
+  className="btn btn-warning rounded-3 px-4 mt-2 fw-semibold"
+  onClick={() => setActiveTab("experience")}
+>
+  <i className="bi bi-plus-circle me-2"></i>
+  Share Your Experience
+</button>
+
+      
+
+    </div>
+
+  ) : (
+
+    <>
+
+      
+
+
+      {experiences.map(
+  (exp, index) => (
+
+          <div
+            className="experience-card"
+            key={index}
+          >
+
+            <div className="experience-header">
+
+              <div>
+
+                <h4 className="company-name">
+                  {exp.companyName}
+                </h4>
+
+
+                <div className="position-text">
+
+                  {exp.position}
+
+                  {exp.role &&
+                    ` • ${exp.role}`}
+
+                </div>
+
+              </div>
+
+
+              <span
+                className={`experience-badge ${
+                  exp.result
+                    ? "badge-selected"
+                    : "badge-rejected"
+                }`}
+              >
+
+                <i
+                  className={
+                    exp.result
+                      ? "bi bi-check-circle-fill me-1"
+                      : "bi bi-x-circle-fill me-1"
+                  }
+                ></i>
+
+                {exp.result
+                  ? "Selected"
+                  : "Not Selected"}
+
+              </span>
+
+            </div>
+
+
+            <div className="experience-meta">
+
+              <div className="meta-item">
+
+                <i className="bi bi-person-workspace"></i>
+
+                {exp.role}
+
+              </div>
+
+
+              <div className="meta-item">
+
+                <i className="bi bi-clock-fill"></i>
+
+                {exp.experianceinyear}
+
+              </div>
+
+            </div>
+
+
+            {exp.details && (
+
+              <div className="experience-details">
+
+                <strong>
+                  Interview Details
+                </strong>
+
+                <br />
+
+                {exp.details}
+
+              </div>
+
             )}
 
-            {/* EXPERIENCE */}
-            {activeTab === "experience" && (
 
-              <AddExperience />
+            {exp.resumeName && (
+
+              <a
+                href={`http://localhost:9090/Experiance/resume/${exp.experiance_ID}`}
+                target="_blank"
+                rel="noreferrer"
+                className="resume-btn"
+              >
+
+                <i className="bi bi-file-earmark-pdf-fill me-2"></i>
+
+                View Resume
+
+              </a>
 
             )}
 
           </div>
 
+        )
+      )}
+
+    </>
+
+  )}
+
+</div>
+          {/* =========================
+              ADD EXPERIENCE
+          ========================= */}
+
+          {activeTab === "experience" && (
+
+            <div>
+
+              <div className="dashboard-welcome">
+
+                <div>
+
+                  <h1>
+                    Add Interview Experience
+                  </h1>
+
+                  <p>
+                    Share your interview journey
+                    with the IntBuddy community.
+                  </p>
+
+                </div>
+
+              </div>
+
+             <AddExperience
+  onExperienceAdded={loadExperiences}
+/>
+
+            </div>
+
+          )}
+
         </div>
 
-      </div>
+      </main>
 
     </div>
   );
