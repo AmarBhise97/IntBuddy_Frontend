@@ -7,7 +7,9 @@ import "./CustomerDashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function AddExperience() {
+function AddExperience({ onExperienceAdded }) {
+
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -183,60 +185,72 @@ function AddExperience() {
     // ==============================
 
     const response = await api.post(
-    "/Experiance/add",
-    form
+  "/Experiance/add",
+  form
 );
 
+console.log("Experience Added:", response.data);
 
-    console.log(
-      "Experience Added:",
-      response.data
-    );
-    if (onExperienceAdded) {
-  await onExperienceAdded();
+// User-specific localStorage key
+const experienceKey = `experiences_${user.id}`;
+
+// Get old experiences
+const oldExperiences = JSON.parse(
+  localStorage.getItem(experienceKey) || "[]"
+);
+
+// New experience
+const newExperience = response.data;
+
+// Add new experience
+const updatedExperiences = [
+  newExperience,
+  ...oldExperiences
+];
+
+// Save experiences for this user
+localStorage.setItem(
+  experienceKey,
+  JSON.stringify(updatedExperiences)
+);
+
+console.log(
+  "Experiences Saved:",
+  updatedExperiences
+);
+
+// Update dashboard immediately
+if (onExperienceAdded) {
+  onExperienceAdded(newExperience);
 }
 
 setMessage("Experience Added Successfully ✅");
 
-
-    // ==============================
-    // SUCCESS
-    // ==============================
-
-    setMessage(
-      "Experience Added Successfully ✅"
-    );
-
-    alert(
-      "Interview Experience Added Successfully"
-    );
+alert("Interview Experience Added Successfully");
 
 
-    // ==============================
-    // RESET
-    // ==============================
-
-    setFormData({
-
-      companyName: "",
-      position: "",
-      role: "",
-      experianceinyear: "",
-      details: "",
-      result: ""
-
-    });
-
-    setDetailsList([""]);
-
-    setResume(null);
 
 
-    if (fileInputRef.current) {
 
-      fileInputRef.current.value = "";
+alert("Interview Experience Added Successfully");
 
-    }
+// Reset form
+setFormData({
+  companyName: "",
+  position: "",
+  role: "",
+  experianceinyear: "",
+  details: "",
+  result: ""
+});
+
+setDetailsList([""]);
+
+setResume(null);
+
+if (fileInputRef.current) {
+  fileInputRef.current.value = "";
+}
 
 
   } catch (error) {
@@ -570,94 +584,79 @@ function CustomerDashboard() {
 
   const data = localStorage.getItem("userData");
 
-  if (data) {
-
-    const parsed = JSON.parse(data);
-
-    console.log("Logged User:", parsed);
-
-    setUser({
-      id: parsed.id,
-      fullName: parsed.fullName,
-      email: parsed.email,
-      phoneno: parsed.phoneno
-    });
-
+  if (!data) {
+    setExperiences([]);
+    return;
   }
 
-  // Load ALL users' interview experiences
+  const parsed = JSON.parse(data);
+
+  console.log("Logged User:", parsed);
+
+  setUser({
+    id: parsed.id,
+    fullName: parsed.fullName,
+    email: parsed.email,
+    phoneno: parsed.phoneno
+  });
+
+  // Load logged user's experiences
   loadExperiences();
 
 }, []);
 
 
-  const loadExperiences = async () => {
+ const loadExperiences = () => {
+
   try {
 
-    const storedUser =
-      localStorage.getItem("userData");
+    const storedUser = localStorage.getItem("userData");
 
     if (!storedUser) {
       setExperiences([]);
       return;
     }
 
-    const loggedUser =
-      JSON.parse(storedUser);
+    const loggedUser = JSON.parse(storedUser);
 
-    console.log(
-      "Logged User ID:",
-      loggedUser.id
-    );
+    console.log("Logged User ID:", loggedUser.id);
 
-    const response = await api.get(
-      "/Experiance/getexperiance",
-      {
-        params: {
-          page: 0,
-          size: 1000,
-          sortBy: "experiance_ID",
-          direction: "desc"
-        }
-      }
-    );
+    // User-specific experience key
+    const experienceKey = `experiences_${loggedUser.id}`;
 
-    console.log(
-      "All Experiences:",
-      response.data.data
-    );
+    // Get experiences from localStorage
+    const storedExperiences =
+      localStorage.getItem(experienceKey);
 
-    const allExperiences =
-      response.data.data || [];
+    if (storedExperiences) {
 
-    /*
-     * Backend currently returns fullName,
-     * so frontend filters using logged user's name.
-     */
-    const myExperiences =
-      allExperiences.filter(
-        (experience) =>
-          experience.fullName ===
-          loggedUser.fullName
+      const myExperiences =
+        JSON.parse(storedExperiences);
+
+      console.log(
+        "My Stored Experiences:",
+        myExperiences
       );
 
-    console.log(
-      "MY EXPERIENCES:",
-      myExperiences
-    );
+      setExperiences(myExperiences);
 
-    setExperiences(
-      myExperiences
-    );
+    } else {
+
+      console.log("No stored experiences found.");
+
+      setExperiences([]);
+
+    }
 
   } catch (error) {
 
     console.error(
-      "Loading experiences failed:",
+      "Loading stored experiences failed:",
       error
     );
 
     setExperiences([]);
+
   }
 };
 
@@ -1322,8 +1321,15 @@ function CustomerDashboard() {
 
               </div>
 
-             <AddExperience
-  onExperienceAdded={loadExperiences}
+            <AddExperience
+  onExperienceAdded={(newExperience) => {
+
+    setExperiences((prev) => [
+      newExperience,
+      ...prev
+    ]);
+
+  }}
 />
 
             </div>

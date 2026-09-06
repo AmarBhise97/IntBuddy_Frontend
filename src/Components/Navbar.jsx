@@ -321,11 +321,13 @@ function Navbar() {
               {/* USER PROFILE */}
 
               <div
-                className="d-flex align-items-center"
-                style={{
-                  gap: "10px"
-                }}
-              >
+  className="d-flex align-items-center"
+  onClick={() => navigate("/CustomerDashboard")}
+  style={{
+    gap: "10px",
+    cursor: "pointer"
+  }}
+>
 
                 {/* USER ICON */}
 

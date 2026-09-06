@@ -194,14 +194,20 @@ function Registration() {
 
   return (
     <div
-      className="container-fluid registration-page"
-      style={{
-        minHeight: "calc(100vh - 72px)",
-        background: "#f5f7fb",
-        padding: "0",
-      }}
-    >
-      <div className="row g-0" style={{ minHeight: "calc(100vh - 72px)" }}>
+  className="container-fluid registration-page"
+  style={{
+    minHeight: "100vh",
+    background: "#f5f7fb",
+    padding: "80px 0 30px 0",
+    boxSizing: "border-box",
+  }}
+>
+     <div
+  className="row g-0"
+  style={{
+    minHeight: "calc(100vh - 110px)",
+  }}
+>
         {/* ==================================================
             LEFT SIDE - BRANDING
         ================================================== */}
@@ -551,13 +557,16 @@ function Registration() {
         {/* ==================================================
             RIGHT SIDE - REGISTRATION FORM
         ================================================== */}
+       
         <div
-          className="col-lg-6 d-flex align-items-center justify-content-center"
-          style={{
-            padding: "40px 25px",
-            background: "#f5f7fb",
-          }}
-        >
+  className="col-lg-6 d-flex justify-content-center"
+  style={{
+    alignItems: "flex-start",
+    padding: "35px 25px 50px 25px",
+    background: "#f5f7fb",
+    boxSizing: "border-box",
+  }}
+>
           <div
             onMouseEnter={() => setHoveredWord("card")}
             onMouseLeave={() => setHoveredWord(null)}
