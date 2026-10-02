@@ -7,13 +7,15 @@ function Navbar() {
 
   const [search, setSearch] = useState("");
   const [loggedUser, setLoggedUser] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // =========================
+  // =====================================================
   // CHECK LOGGED USER
-  // =========================
+  // =====================================================
+
   useEffect(() => {
 
     const userData = localStorage.getItem("userData");
@@ -23,7 +25,6 @@ function Navbar() {
       try {
 
         const parsedUser = JSON.parse(userData);
-
         setLoggedUser(parsedUser);
 
       } catch (error) {
@@ -31,7 +32,6 @@ function Navbar() {
         console.error("Invalid userData:", error);
 
         localStorage.removeItem("userData");
-
         setLoggedUser(null);
       }
 
@@ -44,23 +44,62 @@ function Navbar() {
   }, [location.pathname]);
 
 
-  // =========================
+  // =====================================================
+  // CLOSE MOBILE MENU WHEN ROUTE CHANGES
+  // =====================================================
+
+  useEffect(() => {
+
+    setIsMenuOpen(false);
+
+  }, [location.pathname]);
+
+
+  // =====================================================
+  // TOGGLE MOBILE MENU
+  // =====================================================
+
+  const toggleMenu = () => {
+
+    setIsMenuOpen((prev) => !prev);
+
+  };
+
+
+  // =====================================================
+  // CLOSE MOBILE MENU
+  // =====================================================
+
+  const closeMenu = () => {
+
+    setIsMenuOpen(false);
+
+  };
+
+
+  // =====================================================
   // SEARCH
-  // =========================
+  // =====================================================
+
   const handleSearch = (e) => {
 
     e.preventDefault();
 
     if (search.trim() === "") return;
 
-    navigate(`/search?keyword=${encodeURIComponent(search.trim())}`);
+    closeMenu();
+
+    navigate(
+      `/search?keyword=${encodeURIComponent(search.trim())}`
+    );
 
   };
 
 
-  // =========================
+  // =====================================================
   // GET USER INITIALS
-  // =========================
+  // =====================================================
+
   const getInitials = (name) => {
 
     if (!name) return "U";
@@ -75,16 +114,32 @@ function Navbar() {
   };
 
 
-  // =========================
+  // =====================================================
   // LOGOUT
-  // =========================
+  // =====================================================
+
   const handleLogout = () => {
 
     localStorage.removeItem("userData");
 
     setLoggedUser(null);
 
+    closeMenu();
+
     navigate("/Login");
+
+  };
+
+
+  // =====================================================
+  // NAVIGATE TO DASHBOARD
+  // =====================================================
+
+  const handleDashboard = () => {
+
+    closeMenu();
+
+    navigate("/CustomerDashboard");
 
   };
 
@@ -105,13 +160,14 @@ function Navbar() {
       <div className="container-fluid px-4">
 
 
-        {/* =========================
+        {/* =====================================================
             LOGO
-        ========================= */}
+        ===================================================== */}
 
         <Link
           className="navbar-brand me-4"
           to="/"
+          onClick={closeMenu}
         >
 
           <img
@@ -127,17 +183,16 @@ function Navbar() {
         </Link>
 
 
-        {/* =========================
+        {/* =====================================================
             MOBILE TOGGLE
-        ========================= */}
+        ===================================================== */}
 
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          onClick={toggleMenu}
           aria-controls="navbarNav"
-          aria-expanded="false"
+          aria-expanded={isMenuOpen}
           aria-label="Toggle navigation"
           style={{
             border: "1px solid #D4AF37"
@@ -149,31 +204,38 @@ function Navbar() {
             style={{
               filter: "invert(1)"
             }}
-          ></span>
+          >
+          </span>
 
         </button>
 
 
-        {/* =========================
+        {/* =====================================================
             NAVBAR CONTENT
-        ========================= */}
+        ===================================================== */}
 
         <div
-          className="collapse navbar-collapse"
+          className={`collapse navbar-collapse ${
+            isMenuOpen ? "show" : ""
+          }`}
           id="navbarNav"
         >
 
 
-          {/* =========================
+          {/* =====================================================
               MENU
-          ========================= */}
+          ===================================================== */}
 
           <ul className="navbar-nav me-4">
+
+
+            {/* HOME */}
 
             <li className="nav-item">
 
               <Link
                 to="/"
+                onClick={closeMenu}
                 className="nav-link fw-bold px-3"
                 style={{
                   color: "#D4AF37",
@@ -186,10 +248,13 @@ function Navbar() {
             </li>
 
 
+            {/* ABOUT */}
+
             <li className="nav-item">
 
               <Link
                 to="/About"
+                onClick={closeMenu}
                 className="nav-link fw-bold px-3"
                 style={{
                   color: "#D4AF37",
@@ -202,10 +267,13 @@ function Navbar() {
             </li>
 
 
+            {/* CONTACT */}
+
             <li className="nav-item">
 
               <Link
                 to="/Contact"
+                onClick={closeMenu}
                 className="nav-link fw-bold px-3"
                 style={{
                   color: "#D4AF37",
@@ -220,9 +288,9 @@ function Navbar() {
           </ul>
 
 
-          {/* =========================
+          {/* =====================================================
               SEARCH
-          ========================= */}
+          ===================================================== */}
 
           <form
             className="d-flex flex-grow-1 mx-4 my-3 my-lg-0"
@@ -245,24 +313,23 @@ function Navbar() {
               }}
             />
 
-
-           
-
-
           </form>
 
 
-          {/* =================================================
+          {/* =====================================================
               NOT LOGGED IN
-              SHOW LOGIN + REGISTER
-          ================================================= */}
+          ===================================================== */}
 
           {!loggedUser && (
 
             <div className="d-flex gap-2">
 
+
+              {/* LOGIN */}
+
               <Link
                 to="/Login"
+                onClick={closeMenu}
                 className="btn rounded-pill px-4 fw-semibold"
                 style={{
                   border: "2px solid #D4AF37",
@@ -280,8 +347,11 @@ function Navbar() {
               </Link>
 
 
+              {/* REGISTER */}
+
               <Link
                 to="/Registration"
+                onClick={closeMenu}
                 className="btn rounded-pill px-4 fw-semibold"
                 style={{
                   background: "#D4AF37",
@@ -304,10 +374,9 @@ function Navbar() {
           )}
 
 
-          {/* =================================================
+          {/* =====================================================
               LOGGED IN
-              SHOW USER + LOGOUT
-          ================================================= */}
+          ===================================================== */}
 
           {loggedUser && (
 
@@ -318,16 +387,18 @@ function Navbar() {
               }}
             >
 
+
               {/* USER PROFILE */}
 
               <div
-  className="d-flex align-items-center"
-  onClick={() => navigate("/CustomerDashboard")}
-  style={{
-    gap: "10px",
-    cursor: "pointer"
-  }}
->
+                className="d-flex align-items-center"
+                onClick={handleDashboard}
+                style={{
+                  gap: "10px",
+                  cursor: "pointer"
+                }}
+              >
+
 
                 {/* USER ICON */}
 
@@ -343,7 +414,8 @@ function Navbar() {
                     justifyContent: "center",
                     fontWeight: "800",
                     fontSize: "14px",
-                    boxShadow: "0 3px 10px rgba(212,175,55,0.3)"
+                    boxShadow:
+                      "0 3px 10px rgba(212,175,55,0.3)"
                   }}
                 >
 
@@ -390,7 +462,7 @@ function Navbar() {
               </div>
 
 
-              {/* LOGOUT BUTTON */}
+              {/* LOGOUT */}
 
               <button
                 type="button"

@@ -974,4 +974,515 @@
   .registration-card {
     margin: 15px;
   }
+
+  /* =====================================================
+   INTBUDDY - MOBILE RESPONSIVE FIX
+   ===================================================== */
+
+/* Prevent horizontal scrolling */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Make every section responsive */
+section {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Bootstrap row fix */
+.row {
+  --bs-gutter-x: 1.5rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.container,
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* =====================================================
+   NAVBAR
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    width: 100%;
+    padding: 10px 14px !important;
+  }
+
+  .navbar .container,
+  .navbar .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .navbar-brand {
+    max-width: 70%;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-brand img {
+    max-width: 155px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .navbar-toggler {
+    width: 58px;
+    height: 48px;
+    padding: 8px 10px;
+    flex-shrink: 0;
+  }
+
+  .navbar-collapse {
+    width: 100%;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    padding-top: 12px;
+  }
+
+  .navbar-nav .nav-item {
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 11px 10px !important;
+  }
+}
+
+
+/* =====================================================
+   HERO SECTION
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* Prevent hero animation from pushing content */
+  .hero-section {
+    width: 100%;
+    min-height: auto !important;
+    height: auto !important;
+    padding-top: 90px !important;
+    padding-bottom: 50px !important;
+    overflow: hidden;
+  }
+
+  .hero-section .container,
+  .hero-section .container-fluid {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero-section .row {
+    align-items: center;
+  }
+
+  /* Main heading */
+  .hero-section .display-2,
+  .hero-section h1.display-2 {
+    font-size: clamp(2rem, 10vw, 2.7rem) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.5px;
+    margin-top: 0 !important;
+    margin-bottom: 18px !important;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Normal hero text */
+  .hero-section p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 24px;
+  }
+
+  /* Hero buttons */
+  .hero-section .custom-btn {
+    width: 100%;
+    max-width: 280px;
+    min-height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Hero image */
+  .hero-section .hero-img,
+  .hero-img {
+    display: block;
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    margin: 30px auto 0;
+  }
+
+  /* Disable large glow on mobile */
+  .hero-section .glow,
+  .glow {
+    width: 100%;
+    height: 100%;
+    filter: blur(60px);
+  }
+}
+
+
+/* =====================================================
+   GENERAL HEADINGS
+   ===================================================== */
+
+@media (max-width: 576px) {
+
+  h1 {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 1.35rem;
+  }
+
+  .display-2 {
+    font-size: 2.15rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .section-tag {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+
+/* =====================================================
+   ABOUT SECTION
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .about-section {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .about-section .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .about-card {
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .about-img {
+    width: 100%;
+    height: 210px !important;
+    object-fit: cover;
+  }
+
+  .card-content {
+    padding: 22px !important;
+  }
+
+  .about-icon {
+    width: 58px;
+    height: 58px;
+    font-size: 23px;
+  }
+
+  .card-badge {
+    right: 12px;
+    bottom: 12px;
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .stat-card,
+  .stats-card {
+    padding: 22px 16px;
+    margin-bottom: 16px;
+  }
+}
+
+
+/* =====================================================
+   BENEFITS SECTION
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .benefits-section {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .benefits-section .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .benefit-card {
+    width: 100%;
+    padding: 28px 20px !important;
+    margin-bottom: 20px;
+    border-radius: 22px;
+  }
+
+  .icon-box {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+  }
+
+  .benefit-card h3 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .benefit-card p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Remove aggressive hover movement on touch devices */
+  .benefit-card:hover {
+    transform: none;
+  }
+
+  .benefit-card:hover .icon-box {
+    transform: none;
+  }
+}
+
+
+/* =====================================================
+   CONTACT SECTION
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  .contact-section {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+
+  .contact-wrapper {
+    width: 100%;
+    border-radius: 20px;
+    margin: 0;
+  }
+
+  .contact-left {
+    width: 100%;
+  }
+
+  .contact-content {
+    padding: 30px 20px !important;
+  }
+
+  .contact-icon {
+    width: 65px;
+    height: 65px;
+    font-size: 26px;
+    border-radius: 18px;
+  }
+
+  .info-item {
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .info-item i {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .form-container {
+    width: 100%;
+    padding: 25px 18px !important;
+  }
+
+  .custom-input {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    min-height: 50px;
+  }
+}
+
+
+/* =====================================================
+   REGISTRATION PAGE
+   ===================================================== */
+
+@media (max-width: 576px) {
+
+  .registration-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    padding: 85px 12px 30px !important;
+    align-items: flex-start;
+  }
+
+  .registration-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 22px 16px;
+    border-radius: 16px;
+  }
+
+  .registration-card h2 {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .registration-card .form-control,
+  .registration-card .form-select {
+    width: 100%;
+    min-height: 45px;
+  }
+
+  .registration-card button {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE ANIMATION FIX
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* Horizontal animation causes mobile overflow */
+  .fade-in-left,
+  .fade-in-right {
+    animation-name: mobileFadeUp;
+  }
+
+  @keyframes mobileFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Reduce floating movement */
+  .floating-heading,
+  .floating-text,
+  .floating-badge {
+    animation-duration: 7s;
+  }
+
+  /* Disable hover effects on mobile */
+  .about-card:hover,
+  .stat-card:hover,
+  .stats-card:hover {
+    transform: none;
+  }
+
+  .about-card:hover .about-img {
+    transform: none;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL DEVICES
+   ===================================================== */
+
+@media (max-width: 400px) {
+
+  .hero-section {
+    padding-top: 80px !important;
+  }
+
+  .hero-section .container,
+  .about-section .container,
+  .benefits-section .container,
+  .contact-section .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .hero-section .display-2,
+  .hero-section h1.display-2 {
+    font-size: 1.85rem !important;
+  }
+
+  .hero-section p {
+    font-size: 14px !important;
+  }
+
+  .custom-btn {
+    max-width: 100%;
+  }
+
+  .about-card,
+  .benefit-card {
+    border-radius: 18px;
+  }
+}
+
+
+/* =====================================================
+   SAFETY FIX
+   ===================================================== */
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+input,
+textarea,
+select,
+button {
+  max-width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
 }
