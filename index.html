@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    
-    <meta name="google-site-verification" content="61fRzU2VhcvTBMNbPMYCtvWugVrUTN_82E6AWUcEf1Q" />
+
+    <meta
+      name="google-site-verification"
+      content="61fRzU2VhcvTBMNbPMYCtvWugVrUTN_82E6AWUcEf1Q"
+    />
+
     <meta charset="UTF-8" />
 
-    <link rel="icon" type="image/png" href="intbuddylogo.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -26,10 +31,45 @@
 
     <meta name="robots" content="index, follow" />
 
-    <!-- Google Verification (Add this after Google gives you the code) -->
-    <!--
-    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" />
-    -->
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://intbuddy.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="IntBuddy - Interview Preparation Platform" />
+
+    <meta
+      property="og:description"
+      content="Prepare for interviews with real interview experiences, coding practice, aptitude tests, mock interviews, and placement resources."
+    />
+
+    <meta property="og:url" content="https://intbuddy.com/" />
+
+    <meta property="og:type" content="website" />
+
+    <meta
+      property="og:image"
+      content="https://intbuddy.com/intbuddylogo.png"
+    />
+
+    <meta property="og:site_name" content="IntBuddy" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta
+      name="twitter:title"
+      content="IntBuddy - Interview Preparation Platform"
+    />
+
+    <meta
+      name="twitter:description"
+      content="Interview preparation platform with real interview experiences and placement resources."
+    />
+
+    <meta
+      name="twitter:image"
+      content="https://intbuddy.com/intbuddylogo.png"
+    />
 
     <!-- Bootstrap Icons -->
     <link
@@ -51,20 +91,33 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
-       
+
+    <!-- Organization Structured Data -->
     <script type="application/ld+json">
-{
-            "@context":"https://schema.org",
-           "@type":"WebSite",
-               "name":"IntBuddy",
-                "url":"https://int-buddy-frontend.vercel.app/"
-}
-</script>
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "IntBuddy",
+      "url": "https://intbuddy.com/",
+      "logo": "https://intbuddy.com/intbuddylogo.png"
+    }
+    </script>
+
+    <!-- Website Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "IntBuddy",
+      "url": "https://intbuddy.com/"
+    }
+    </script>
 
   </head>
 
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
