@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 //import axios from "axios";
-import api from "../axiosConfig";
+import api, { API_BASE_URL } from "../axiosConfig";
 
 import "./CustomerDashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -1272,7 +1272,7 @@ function CustomerDashboard() {
             {exp.resumeName && (
 
               <a
-                href={`http://localhost:9090/Experiance/resume/${exp.experiance_ID}`}
+                href={`${API_BASE_URL}/Experiance/resume/${exp.experiance_ID}`}
                 target="_blank"
                 rel="noreferrer"
                 className="resume-btn"

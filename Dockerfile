@@ -4,20 +4,22 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
+
+# Vite inlines env vars at build time; "/api" is proxied to the backend by Nginx
+ARG VITE_API_URL=/api
+ENV VITE_API_URL=$VITE_API_URL
 
 RUN npm run build
 
 FROM nginx:alpine
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
-<<<<<<< HEAD
 CMD ["nginx","-g","daemon off;"]
-=======
-CMD ["nginx","-g","daemon off;"]
->>>>>>> 60af3ec (Add registration)

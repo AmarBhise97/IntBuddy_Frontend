@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import api from "../axiosConfig";
+import api, { API_BASE_URL } from "../axiosConfig";
 
 function SearchPage() {
 
@@ -98,7 +98,7 @@ function SearchPage() {
         </p>
 
         <a
-            href={`http://localhost:9090/Experiance/resume/${item.experiance_ID}`}
+            href={`${API_BASE_URL}/Experiance/resume/${item.experiance_ID}`}
             target="_blank"
             rel="noreferrer"
             className="btn btn-danger"

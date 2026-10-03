@@ -1,14 +1,11 @@
 services:
   frontend:
 
-    image: amarbhise97/intbuddy-frontend:latest
+    image: amarbhise/intbuddy-frontend:latest
 
     container_name: intbuddy-frontend
 
     restart: unless-stopped
-
-    env_file:
-      - ../env/frontend.env
 
     expose:
       - "80"
