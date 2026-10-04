@@ -3,7 +3,7 @@ import Hero from "../assets/hero.jpg";
 import ExperienceForm from "./ExperianceFrom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 function Home() {
   const [showForm, setShowForm] = useState(false);
