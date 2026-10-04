@@ -961,7 +961,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-lock-fill"></i>
+                     <Lock size={18} strokeWidth={2} />
                     </span>
 
                     <input

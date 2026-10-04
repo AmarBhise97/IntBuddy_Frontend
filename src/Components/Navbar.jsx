@@ -2,6 +2,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import intbuddylogo from "../assets/intbuddylogo.png";
+import { LogOut } from "lucide-react";
 
 function Navbar() {
 
@@ -481,9 +482,11 @@ function Navbar() {
                 }}
               >
 
-                <i className="bi bi-box-arrow-right"></i>
-
-                Logout
+                <LogOut
+  size={18}
+  strokeWidth={2}
+ />
+Logout
 
               </button>
 
