@@ -61,7 +61,7 @@ function Home() {
                 className="btn btn-warning rounded-pill px-5 py-3 fw-bold shadow-lg custom-btn"
                 onClick={() => setShowForm(true)}
               >
-                Share Experience <i className="bi bi-arrow-right ms-2"></i>
+               Share Experience <span className="ms-2">→</span>
               </button>
 
             </div>
