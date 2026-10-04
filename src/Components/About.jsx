@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+
+import {
+  Building2,
+  Target,
+  Sparkles
+} from "lucide-react";
 
 function About() {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,7 +18,7 @@ function About() {
     <>
       <section className="about-section py-5 overflow-hidden">
         <div className="container py-lg-5">
-          
+
           {/* HEADER */}
           <div
             className={`text-center mb-5 ${
@@ -39,12 +44,16 @@ function About() {
             </p>
           </div>
 
+
           {/* CARDS */}
           <div className="row g-4">
+
             {/* CARD 1 */}
             <div className="col-lg-4 col-md-6">
               <div className="about-card">
+
                 <div className="image-wrapper">
+
                   <img
                     src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
                     alt="About IntBuddy"
@@ -52,14 +61,24 @@ function About() {
                   />
 
                   <div className="card-badge">
-                    <i className="bi bi-building me-2"></i>
+                    <Building2
+                      size={18}
+                      strokeWidth={2}
+                      className="me-2"
+                    />
                     About Us
                   </div>
+
                 </div>
 
+
                 <div className="card-content">
+
                   <div className="about-icon">
-                    <i className="bi bi-building"></i>
+                    <Building2
+                      size={32}
+                      strokeWidth={2}
+                    />
                   </div>
 
                   <h4 className="fw-bold mt-3 mb-3">
@@ -76,14 +95,18 @@ function About() {
                   <button className="btn btn-warning rounded-pill px-4 mt-2">
                     Learn More
                   </button>
+
                 </div>
               </div>
             </div>
 
+
             {/* CARD 2 */}
             <div className="col-lg-4 col-md-6">
               <div className="about-card featured-card">
+
                 <div className="image-wrapper">
+
                   <img
                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
                     alt="Mission"
@@ -91,14 +114,24 @@ function About() {
                   />
 
                   <div className="card-badge">
-                    <i className="bi bi-bullseye me-2"></i>
+                    <Target
+                      size={18}
+                      strokeWidth={2}
+                      className="me-2"
+                    />
                     Mission
                   </div>
+
                 </div>
 
+
                 <div className="card-content">
+
                   <div className="about-icon">
-                    <i className="bi bi-bullseye"></i>
+                    <Target
+                      size={32}
+                      strokeWidth={2}
+                    />
                   </div>
 
                   <h4 className="fw-bold text-warning mt-3 mb-3">
@@ -114,14 +147,18 @@ function About() {
                   <button className="btn btn-warning rounded-pill px-4 mt-2">
                     Explore More
                   </button>
+
                 </div>
               </div>
             </div>
 
+
             {/* CARD 3 */}
             <div className="col-lg-4 col-md-12">
               <div className="about-card">
+
                 <div className="image-wrapper">
+
                   <img
                     src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
                     alt="Success"
@@ -129,14 +166,24 @@ function About() {
                   />
 
                   <div className="card-badge">
-                    <i className="bi bi-stars me-2"></i>
+                    <Sparkles
+                      size={18}
+                      strokeWidth={2}
+                      className="me-2"
+                    />
                     Why Us
                   </div>
+
                 </div>
 
+
                 <div className="card-content">
+
                   <div className="about-icon">
-                    <i className="bi bi-stars"></i>
+                    <Sparkles
+                      size={32}
+                      strokeWidth={2}
+                    />
                   </div>
 
                   <h4 className="fw-bold mt-3 mb-3">
@@ -152,13 +199,17 @@ function About() {
                   <button className="btn btn-outline-warning rounded-pill px-4 mt-2">
                     Get Started
                   </button>
+
                 </div>
               </div>
             </div>
+
           </div>
+
 
           {/* STATS */}
           <div className="row mt-5 g-4">
+
             <div className="col-md-3 col-6">
               <div className="stat-card">
                 <h2>5K+</h2>
@@ -186,15 +237,11 @@ function About() {
                 <p>User Satisfaction</p>
               </div>
             </div>
+
           </div>
+
         </div>
       </section>
-
-
-
-
-
-
     </>
   );
 }

@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { useNavigate } from "react-router-dom";
+
+import {
+  Trophy,
+  BookCheck,
+  Users
+} from "lucide-react";
+
+import { FaLinkedinIn } from "react-icons/fa";
 
 function Benefits() {
   const navigate = useNavigate();
@@ -13,39 +20,39 @@ function Benefits() {
 
   const benefits = [
     {
-  icon: "bi-linkedin",
-  title: "LinkedIn Exposure",
-  description:
-    "Boost your professional visibility and strengthen your personal brand by sharing your interview journey.",
-  path: "/community",
-},   
-   {
-  icon: "bi-trophy-fill",
-  title: "Win Rewards",
-  description:
-    "Get a chance to earn exciting rewards and recognition for contributing valuable interview experiences.",
-  path: "/rewards",
-},
-   {
-  icon: "bi-journal-check",
-  title: "Get Published",
-  description:
-    "Have your interview story featured on IntBuddy and inspire thousands of aspiring candidates.",
-  path: "/publish",
-},
-   {
-  icon: "bi-people-fill",
-  title: "Mentorship Impact",
-  description:
-    "Help students and job seekers prepare better by sharing real-world interview insights.",
-  path: "/mentorship",
-},
+      icon: FaLinkedinIn,
+      title: "LinkedIn Exposure",
+      description:
+        "Boost your professional visibility and strengthen your personal brand by sharing your interview journey.",
+      path: "/community",
+    },
+    {
+      icon: Trophy,
+      title: "Win Rewards",
+      description:
+        "Get a chance to earn exciting rewards and recognition for contributing valuable interview experiences.",
+      path: "/rewards",
+    },
+    {
+      icon: BookCheck,
+      title: "Get Published",
+      description:
+        "Have your interview story featured on IntBuddy and inspire thousands of aspiring candidates.",
+      path: "/publish",
+    },
+    {
+      icon: Users,
+      title: "Mentorship Impact",
+      description:
+        "Help students and job seekers prepare better by sharing real-world interview insights.",
+      path: "/mentorship",
+    },
   ];
 
   return (
     <section className="benefits-section py-5 overflow-hidden">
       <div className="container py-lg-5">
-        
+
         {/* HEADER */}
         <div
           className={`text-center mb-5 ${
@@ -71,45 +78,58 @@ function Benefits() {
           </p>
         </div>
 
+
         {/* BENEFIT CARDS */}
         <div className="row g-4 justify-content-center">
-          {benefits.map((item, index) => (
-            <div
-              className={`col-lg-3 col-md-6 ${
-                show ? `fade-up delay-${index + 1}` : ""
-              }`}
-              key={index}
-            >
-              <div
-  className="benefit-card text-center"
-  onClick={() => {
-    if (item.path) {
-      navigate(item.path);
-    }
-  }}
-  style={{
-    cursor: item.path ? "pointer" : "default",
-  }}
->
-                <div className="card-glow"></div>
 
-                <div className="icon-box">
-                  <i className={`bi ${item.icon}`}></i>
+          {benefits.map((item, index) => {
+            const Icon = item.icon;
+
+            return (
+              <div
+                className={`col-lg-3 col-md-6 ${
+                  show ? `fade-up delay-${index + 1}` : ""
+                }`}
+                key={index}
+              >
+
+                <div
+                  className="benefit-card text-center"
+                  onClick={() => {
+                    if (item.path) {
+                      navigate(item.path);
+                    }
+                  }}
+                  style={{
+                    cursor: item.path ? "pointer" : "default",
+                  }}
+                >
+
+                  <div className="card-glow"></div>
+
+                  <div className="icon-box">
+                    <Icon
+                      size={38}
+                      strokeWidth={2}
+                    />
+                  </div>
+
+                  <h5 className="fw-bold mt-4 mb-3">
+                    {item.title}
+                  </h5>
+
+                  <p className="text-muted">
+                    {item.description}
+                  </p>
+
                 </div>
 
-                <h5 className="fw-bold mt-4 mb-3">
-                  {item.title}
-                </h5>
-
-                <p className="text-muted">
-                  {item.description}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
+
         </div>
 
-        
       </div>
     </section>
   );
