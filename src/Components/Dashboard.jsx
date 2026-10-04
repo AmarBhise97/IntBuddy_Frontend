@@ -5,7 +5,24 @@ import api, { API_BASE_URL } from "../axiosConfig";
 
 import "./CustomerDashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import {
+  Megaphone,
+  LayoutDashboard,
+  PlusCircle,
+  LogOut,
+  Calendar,
+  UserCheck,
+  Briefcase,
+  TrendingUp,
+  Mail,
+  Phone,
+  Search,
+  CheckCircle,
+  XCircle,
+  UserRound,
+  Clock,
+  FileText
+} from "lucide-react";
 
 function AddExperience({ onExperienceAdded }) {
 
@@ -802,13 +819,13 @@ function CustomerDashboard() {
       }}
     >
 
-      <i
-        className="bi bi-megaphone-fill"
-        style={{
-          color: "#ffbf00",
-        }}
-      ></i>
-
+     <Megaphone
+  size={18}
+  strokeWidth={2}
+  style={{
+    color: "#ffbf00",
+  }}
+/>
       Please share your interview experience. It can be a great help to another candidate and inspire others to prepare confidently.
 
     </div>
@@ -896,7 +913,7 @@ function CustomerDashboard() {
           }
         >
 
-          <i className="bi bi-grid-1x2-fill"></i>
+         <LayoutDashboard size={18} strokeWidth={2} />
 
           Overview
 
@@ -914,7 +931,7 @@ function CustomerDashboard() {
           }
         >
 
-          <i className="bi bi-plus-circle-fill"></i>
+        <PlusCircle size={18} strokeWidth={2} />
 
           Add Experience
 
@@ -929,7 +946,7 @@ function CustomerDashboard() {
           onClick={handleLogout}
         >
 
-          <i className="bi bi-box-arrow-right"></i>
+          <LogOut size={18} strokeWidth={2} />
 
           Logout
 
@@ -978,7 +995,11 @@ function CustomerDashboard() {
 
                 <div className="dashboard-date">
 
-                  <i className="bi bi-calendar3 me-2"></i>
+                 <Calendar
+  size={18}
+  strokeWidth={2}
+  className="me-2"
+/>
 
                   Interview Dashboard
 
@@ -997,7 +1018,7 @@ function CustomerDashboard() {
                   <div className="stat-top">
 
                     <div className="stat-icon">
-                      <i className="bi bi-person-check-fill"></i>
+                    <UserCheck size={24} strokeWidth={2} />
                     </div>
 
                   </div>
@@ -1018,7 +1039,7 @@ function CustomerDashboard() {
                   <div className="stat-top">
 
                     <div className="stat-icon">
-                      <i className="bi bi-briefcase-fill"></i>
+                     <Briefcase size={24} strokeWidth={2} />
                     </div>
 
                   </div>
@@ -1039,7 +1060,7 @@ function CustomerDashboard() {
                   <div className="stat-top">
 
                     <div className="stat-icon">
-                      <i className="bi bi-graph-up-arrow"></i>
+                     <TrendingUp size={24} strokeWidth={2} />
                     </div>
 
                   </div>
@@ -1091,7 +1112,7 @@ function CustomerDashboard() {
 
                       <div className="profile-info">
 
-                        <i className="bi bi-envelope-fill"></i>
+                        <Mail size={18} strokeWidth={2} />
 
                         {user.email}
 
@@ -1102,8 +1123,7 @@ function CustomerDashboard() {
 
                         <div className="profile-info">
 
-                          <i className="bi bi-telephone-fill"></i>
-
+                         <Phone size={18} strokeWidth={2} />
                           {user.phoneno}
 
                         </div>
@@ -1143,7 +1163,7 @@ function CustomerDashboard() {
 
       <div className="empty-icon">
 
-        <i className="bi bi-search"></i>
+        <Search size={30} strokeWidth={2} />
 
       </div>
 
@@ -1161,7 +1181,11 @@ function CustomerDashboard() {
   className="btn btn-warning rounded-3 px-4 mt-2 fw-semibold"
   onClick={() => setActiveTab("experience")}
 >
-  <i className="bi bi-plus-circle me-2"></i>
+  <PlusCircle
+  size={18}
+  strokeWidth={2}
+  className="me-2"
+/>
   Share Your Experience
 </button>
 
@@ -1213,13 +1237,19 @@ function CustomerDashboard() {
                 }`}
               >
 
-                <i
-                  className={
-                    exp.result
-                      ? "bi bi-check-circle-fill me-1"
-                      : "bi bi-x-circle-fill me-1"
-                  }
-                ></i>
+               {exp.result ? (
+  <CheckCircle
+    size={16}
+    strokeWidth={2}
+    className="me-1"
+  />
+) : (
+  <XCircle
+    size={16}
+    strokeWidth={2}
+    className="me-1"
+  />
+)}
 
                 {exp.result
                   ? "Selected"
@@ -1234,7 +1264,7 @@ function CustomerDashboard() {
 
               <div className="meta-item">
 
-                <i className="bi bi-person-workspace"></i>
+               <UserRound size={18} strokeWidth={2} />
 
                 {exp.role}
 
@@ -1243,7 +1273,7 @@ function CustomerDashboard() {
 
               <div className="meta-item">
 
-                <i className="bi bi-clock-fill"></i>
+              <Clock size={18} strokeWidth={2} />
 
                 {exp.experianceinyear}
 
@@ -1278,7 +1308,11 @@ function CustomerDashboard() {
                 className="resume-btn"
               >
 
-                <i className="bi bi-file-earmark-pdf-fill me-2"></i>
+               <FileText
+  size={18}
+  strokeWidth={2}
+  className="me-2"
+/>
 
                 View Resume
 
