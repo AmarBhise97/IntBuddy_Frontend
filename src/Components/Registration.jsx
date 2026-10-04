@@ -1,6 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../axiosConfig";
+import {
+  UserPlus,
+  MessageSquareText,
+  Lightbulb,
+  Rocket,
+  User,
+  Mail,
+  Phone,
+  MailCheck,
+  ShieldLock,
+  CheckCircle,
+  Lock,
+  Eye,
+  EyeOff,
+  VenusAndMars,
+  Globe,
+  MapPin,
+  ArrowRight,
+  ShieldCheck
+} from "lucide-react";
 
 function Registration() {
   const navigate = useNavigate();
@@ -279,7 +299,7 @@ function Registration() {
                     : "none",
               }}
             >
-              <i className="bi bi-person-plus-fill"></i>
+              <UserPlus size={28} strokeWidth={2.5} />
             </div>
 
             {/* Heading */}
@@ -395,7 +415,7 @@ function Registration() {
                       : "none",
                 }}
               >
-                <i className="bi bi-chat-left-text-fill"></i>
+                <MessageSquareText size={20} strokeWidth={2.2} />
               </div>
 
               <div
@@ -460,7 +480,7 @@ function Registration() {
                       : "none",
                 }}
               >
-                <i className="bi bi-lightbulb-fill"></i>
+                <Lightbulb size={20} strokeWidth={2.2} />
               </div>
 
               <div
@@ -525,7 +545,7 @@ function Registration() {
                       : "none",
                 }}
               >
-                <i className="bi bi-rocket-takeoff-fill"></i>
+                <Rocket size={20} strokeWidth={2.2} />
               </div>
 
               <div
@@ -654,7 +674,7 @@ function Registration() {
                       color: "#89919e",
                     }}
                   >
-                    <i className="bi bi-person"></i>
+                    <User size={18} strokeWidth={2} />
                   </span>
 
                   <input
@@ -696,7 +716,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-envelope"></i>
+                     <Mail size={18} strokeWidth={2} />
                     </span>
 
                     <input
@@ -736,7 +756,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-telephone"></i>
+                      <Phone size={18} strokeWidth={2} />
                     </span>
 
                     <input
@@ -775,7 +795,11 @@ function Registration() {
                     color: "#17191f",
                   }}
                 >
-                  <i className="bi bi-envelope-check me-2"></i>
+                  <MailCheck
+  size={18}
+  strokeWidth={2}
+  className="me-2"
+/>
                   {loading ? "Sending OTP..." : "Send Email OTP"}
                 </button>
               )}
@@ -805,7 +829,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-shield-lock"></i>
+                      <ShieldLock size={18} strokeWidth={2} />
                     </span>
 
                     <input
@@ -849,7 +873,11 @@ function Registration() {
                     fontWeight: "600",
                   }}
                 >
-                  <i className="bi bi-check-circle-fill me-2"></i>
+                  <CheckCircle
+  size={18}
+  strokeWidth={2}
+  className="me-2"
+/>
                   Email OTP verified successfully
                 </div>
               )}
@@ -874,7 +902,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-lock"></i>
+                     <Lock size={18} strokeWidth={2} />
                     </span>
 
                     <input
@@ -906,13 +934,11 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i
-                        className={
-                          showPassword
-                            ? "bi bi-eye-slash"
-                            : "bi bi-eye"
-                        }
-                      ></i>
+                      {showPassword ? (
+  <EyeOff size={18} strokeWidth={2} />
+) : (
+  <Eye size={18} strokeWidth={2} />
+)}
                     </button>
                   </div>
                 </div>
@@ -969,13 +995,11 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i
-                        className={
-                          showConfirmPassword
-                            ? "bi bi-eye-slash"
-                            : "bi bi-eye"
-                        }
-                      ></i>
+                      {showConfirmPassword ? (
+  <EyeOff size={18} strokeWidth={2} />
+) : (
+  <Eye size={18} strokeWidth={2} />
+)}
                     </button>
                   </div>
                 </div>
@@ -1000,7 +1024,7 @@ function Registration() {
                       color: "#89919e",
                     }}
                   >
-                    <i className="bi bi-gender-ambiguous"></i>
+                   <VenusAndMars size={18} strokeWidth={2} />
                   </span>
 
                   <select
@@ -1045,7 +1069,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-globe"></i>
+                      <Globe size={18} strokeWidth={2} />
                     </span>
 
                     <input
@@ -1085,7 +1109,7 @@ function Registration() {
                         color: "#89919e",
                       }}
                     >
-                      <i className="bi bi-geo-alt"></i>
+                      <MapPin size={18} strokeWidth={2} />
                     </span>
 
                     <input
@@ -1149,7 +1173,11 @@ function Registration() {
                 ) : (
                   <>
                     Create Account
-                    <i className="bi bi-arrow-right ms-2"></i>
+                    <ArrowRight
+  size={18}
+  className="ms-2"
+  strokeWidth={2.5}
+/>
                   </>
                 )}
               </button>
@@ -1215,10 +1243,12 @@ function Registration() {
                 fontSize: "11px",
               }}
             >
-              <i
-                className="bi bi-shield-check me-1"
-                style={{ color: "#2ca66f" }}
-              ></i>
+             <ShieldCheck
+  size={16}
+  className="me-1"
+  strokeWidth={2}
+  style={{ color: "#2ca66f" }}
+/>
               Your account information is securely protected.
             </div>
           </div>
