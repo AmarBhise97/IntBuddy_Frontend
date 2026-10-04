@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Login.css";
 import api from "../axiosConfig";
+
+import {
+  Users,
+  MessageSquareText,
+  Lightbulb,
+  Rocket,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  ArrowRight,
+  ShieldCheck
+} from "lucide-react";
 
 function Login() {
 
@@ -85,7 +97,7 @@ function Login() {
         <div className="brand-content">
 
           <div className="brand-logo">
-            <i className="bi bi-people-fill"></i>
+            <Users size={28} strokeWidth={2.5} />
           </div>
 
           <h1>
@@ -101,36 +113,53 @@ function Login() {
           <div className="brand-features">
 
             <div className="feature-item">
+
               <div className="feature-icon">
-                <i className="bi bi-chat-square-text-fill"></i>
+                <MessageSquareText
+                  size={22}
+                  strokeWidth={2.5}
+                />
               </div>
 
               <div>
                 <h6>Share Experiences</h6>
                 <p>Share your real interview journey</p>
               </div>
+
             </div>
 
+
             <div className="feature-item">
+
               <div className="feature-icon">
-                <i className="bi bi-lightbulb-fill"></i>
+                <Lightbulb
+                  size={22}
+                  strokeWidth={2.5}
+                />
               </div>
 
               <div>
                 <h6>Learn From Others</h6>
                 <p>Prepare smarter with real experiences</p>
               </div>
+
             </div>
 
+
             <div className="feature-item">
+
               <div className="feature-icon">
-                <i className="bi bi-rocket-takeoff-fill"></i>
+                <Rocket
+                  size={22}
+                  strokeWidth={2.5}
+                />
               </div>
 
               <div>
                 <h6>Grow Your Career</h6>
                 <p>Build confidence for your next interview</p>
               </div>
+
             </div>
 
           </div>
@@ -147,14 +176,20 @@ function Login() {
         <div className="login-card">
 
           <div className="mobile-brand">
+
             <div className="mobile-logo">
-              <i className="bi bi-people-fill"></i>
+              <Users
+                size={26}
+                strokeWidth={2.5}
+              />
             </div>
 
             <h3>
               Int<span>Buddy</span>
             </h3>
+
           </div>
+
 
           <div className="login-heading">
 
@@ -183,7 +218,10 @@ function Login() {
 
               <div className="input-wrapper">
 
-                <i className="bi bi-envelope"></i>
+                <Mail
+                  size={20}
+                  strokeWidth={2}
+                />
 
                 <input
                   type="email"
@@ -215,7 +253,10 @@ function Login() {
 
               <div className="input-wrapper">
 
-                <i className="bi bi-lock"></i>
+                <Lock
+                  size={20}
+                  strokeWidth={2}
+                />
 
                 <input
                   type={showPassword ? "text" : "password"}
@@ -233,13 +274,19 @@ function Login() {
                     setShowPassword(!showPassword)
                   }
                 >
-                  <i
-                    className={
-                      showPassword
-                        ? "bi bi-eye-slash"
-                        : "bi bi-eye"
-                    }
-                  ></i>
+
+                  {showPassword ? (
+                    <EyeOff
+                      size={20}
+                      strokeWidth={2}
+                    />
+                  ) : (
+                    <Eye
+                      size={20}
+                      strokeWidth={2}
+                    />
+                  )}
+
                 </button>
 
               </div>
@@ -280,7 +327,12 @@ function Login() {
               ) : (
                 <>
                   Sign In
-                  <i className="bi bi-arrow-right ms-2"></i>
+
+                  <ArrowRight
+                    size={18}
+                    className="ms-2"
+                    strokeWidth={2.5}
+                  />
                 </>
               )}
 
@@ -308,7 +360,10 @@ function Login() {
 
           <div className="security-note">
 
-            <i className="bi bi-shield-check"></i>
+            <ShieldCheck
+              size={20}
+              strokeWidth={2}
+            />
 
             <span>
               Your account information is securely protected
