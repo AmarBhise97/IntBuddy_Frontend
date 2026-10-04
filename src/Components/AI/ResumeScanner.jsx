@@ -1,148 +1,151 @@
-import {useState} from "react";
+import { useState, useRef } from "react";
 import api from "../../axiosConfig";
 import "./InterviewAI.css";
 
+import { FaPaperclip } from "react-icons/fa";
 
-function ResumeScanner(){
+function ResumeScanner() {
 
-const [file,setFile]=useState(null);
-const [result,setResult]=useState(null);
-const [loading,setLoading]=useState(false);
+  const [file, setFile] = useState(null);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const fileInputRef = useRef(null);
 
+  const analyzeResume = async () => {
 
-const analyzeResume=async()=>{
+    if (!file) {
+      alert("Please upload resume");
+      return;
+    }
 
+    const formData = new FormData();
 
-if(!file){
-alert("Please upload resume");
-return;
-}
+    formData.append(
+      "resume",
+      file
+    );
 
+    try {
 
-const formData=new FormData();
+      setLoading(true);
 
-formData.append(
-"resume",
-file
-);
+      const response =
+        await api.post(
+          "/resume/analyze",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          }
+        );
 
+      setResult(response.data);
 
-try{
+    } catch (error) {
 
-setLoading(true);
+      alert("Resume analysis failed");
 
+    }
 
-const response =
-await api.post(
-"/resume/analyze",
-formData,
-{
-headers:{
-"Content-Type":"multipart/form-data"
-}
-}
-);
+    setLoading(false);
+  };
 
 
-setResult(response.data);
+  return (
 
+    <div className="resume-box">
 
-}catch(error){
+      <h3>
+        📄 Resume ATS Scanner
+      </h3>
 
-alert("Resume analysis failed");
 
-}
+      {/* Hidden File Input */}
 
-setLoading(false);
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        accept=".pdf,.docx"
+        onChange={(e) =>
+          setFile(e.target.files[0])
+        }
+      />
 
 
-}
+      {/* Upload Button */}
 
+      <button
+        type="button"
+        className="attach-btn"
+        onClick={() => fileInputRef.current.click()}
+      >
+        <FaPaperclip />
+      </button>
 
 
-return(
+      {/* Selected File */}
 
-<div className="resume-box">
+      {file && (
+        <div className="uploaded-file">
+          📄 {file.name}
+        </div>
+      )}
 
 
-<h3>
-📄 Resume ATS Scanner
-</h3>
+      {/* Analyze Button */}
 
+      <button
+        type="button"
+        className="resume-btn"
+        onClick={analyzeResume}
+        disabled={loading}
+      >
+        {loading ? "Analyzing..." : "Check ATS Score"}
+      </button>
 
-<input
 
-type="file"
+      {result && (
 
-accept=".pdf,.docx"
+        <div className="ats-result">
 
-onChange={(e)=>
-setFile(e.target.files[0])
-}
+          <h2>
+            ATS Score :
 
-/>
+            <span>
+              {result.score}%
+            </span>
+          </h2>
 
 
+          <h4>
+            Suggestions
+          </h4>
 
-<button
-    type="button"
-    className="attach-btn"
-    onClick={() => fileInputRef.current.click()}
->
-    <FaPaperclip />
-</button>
 
+          <ul>
 
+            {result.suggestions.map(
+              (item, index) => (
 
-{
-result &&
+                <li key={index}>
+                  {item}
+                </li>
 
-<div className="ats-result">
+              )
+            )}
 
+          </ul>
 
-<h2>
+        </div>
 
-ATS Score :
+      )}
 
-<span>
-{result.score}%
-</span>
+    </div>
 
-</h2>
-
-
-<h4>
-Suggestions
-</h4>
-
-
-<ul>
-
-{
-result.suggestions.map(
-(item,index)=>
-
-<li key={index}>
-{item}
-</li>
-
-)
-}
-
-</ul>
-
-
-</div>
-
-}
-
-
-</div>
-
-)
-
-
+  );
 }
 
 export default ResumeScanner;
