@@ -598,7 +598,6 @@ function CustomerDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
   const data = localStorage.getItem("userData");
 
   if (!data) {
@@ -609,6 +608,7 @@ function CustomerDashboard() {
   const parsed = JSON.parse(data);
 
   console.log("Logged User:", parsed);
+  console.log("Logged User ID:", parsed.id);
 
   setUser({
     id: parsed.id,
@@ -617,15 +617,19 @@ function CustomerDashboard() {
     phoneno: parsed.phoneno
   });
 
-  // Load logged user's experiences
-  loadExperiences();
+  loadExperiences(parsed.id);
 
 }, []);
 
-
- const loadExperiences = async (userId) => {
+const loadExperiences = async (userId) => {
   try {
     console.log("Loading experiences for User ID:", userId);
+
+    if (!userId) {
+      console.error("User ID is missing");
+      setExperiences([]);
+      return;
+    }
 
     const response = await api.get(`/users/${userId}`);
 
@@ -641,6 +645,7 @@ function CustomerDashboard() {
     setExperiences([]);
   }
 };
+
   const handleLogout = () => {
 
     localStorage.removeItem("userData");
