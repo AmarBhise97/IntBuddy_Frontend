@@ -623,60 +623,24 @@ function CustomerDashboard() {
 }, []);
 
 
- const loadExperiences = () => {
-
+ const loadExperiences = async (userId) => {
   try {
+    console.log("Loading experiences for User ID:", userId);
 
-    const storedUser = localStorage.getItem("userData");
+    const response = await api.get(`/users/${userId}`);
 
-    if (!storedUser) {
-      setExperiences([]);
-      return;
-    }
+    console.log("User API Response:", response.data);
+    console.log("User Experiences:", response.data.experiance);
 
-    const loggedUser = JSON.parse(storedUser);
-
-    console.log("Logged User ID:", loggedUser.id);
-
-    // User-specific experience key
-    const experienceKey = `experiences_${loggedUser.id}`;
-
-    // Get experiences from localStorage
-    const storedExperiences =
-      localStorage.getItem(experienceKey);
-
-    if (storedExperiences) {
-
-      const myExperiences =
-        JSON.parse(storedExperiences);
-
-      console.log(
-        "My Stored Experiences:",
-        myExperiences
-      );
-
-      setExperiences(myExperiences);
-
-    } else {
-
-      console.log("No stored experiences found.");
-
-      setExperiences([]);
-
-    }
+    setExperiences(response.data.experiance || []);
 
   } catch (error) {
-
-    console.error(
-      "Loading stored experiences failed:",
-      error
-    );
+    console.error("Loading experiences failed:", error);
+    console.error("Backend Response:", error.response?.data);
 
     setExperiences([]);
-
   }
 };
-
   const handleLogout = () => {
 
     localStorage.removeItem("userData");
